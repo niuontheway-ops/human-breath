@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d9488">
+<title>壶兰呼吸 · 呼吸康复训练助手</title>
+<!-- 制作：莆田学院附属医院 呼吸与危重症医学科三区 -->
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f0fdfa;color:#134e4a;max-width:520px;margin:0 auto;min-height:100vh}
+.view{display:none;padding:16px 16px calc(92px + env(safe-area-inset-bottom))}
+.view.active{display:block}
+/* ---------- 首页 ---------- */
+.hero{text-align:center;padding:26px 0 6px}
+.logoWrap{width:112px;height:112px;margin:0 auto;border-radius:50%;overflow:hidden;box-shadow:0 6px 18px rgba(13,148,136,.25);background:#ecfdf5}
+.logoWrap svg{width:100%;height:100%;display:block}
+.hero h1{font-size:30px;letter-spacing:6px;margin-top:14px;background:linear-gradient(90deg,#0d9488,#0ea5e9);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+.hero .sub{color:#0f766e;margin-top:6px;font-size:14px;letter-spacing:2px}
+.hero .org{margin-top:10px;font-size:12px;color:#64748b}
+.card{background:#fff;border-radius:16px;padding:16px;margin-top:14px;box-shadow:0 2px 10px rgba(13,148,136,.08)}
+.card h3{font-size:15px;color:#0f766e;margin-bottom:10px}
+.stats{display:flex;gap:12px}
+.stat{flex:1;text-align:center;background:linear-gradient(135deg,#ccfbf1,#e0f2fe);border-radius:12px;padding:12px 0}
+.stat b{font-size:24px;color:#0d9488;display:block}
+.stat span{font-size:12px;color:#475569}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.qbtn{border:none;border-radius:12px;padding:12px 4px;font-size:13px;color:#fff;cursor:pointer;line-height:1.4;touch-action:manipulation}
+.notice li{font-size:13px;color:#475569;margin:6px 0 6px 18px;line-height:1.6}
+/* ---------- 训练列表 ---------- */
+.pageTitle{font-size:20px;font-weight:800;color:#0f766e;padding:14px 0 4px}
+.pageSub{font-size:12px;color:#64748b;margin-bottom:8px}
+.tItem{display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:14px;margin-top:12px;box-shadow:0 2px 10px rgba(13,148,136,.08);cursor:pointer}
+.tIcon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.tInfo{flex:1}
+.tInfo b{font-size:15px;color:#134e4a}
+.tInfo p{font-size:12px;color:#64748b;margin-top:3px;line-height:1.5}
+.tags{margin-top:6px}
+.tag{display:inline-block;font-size:10px;color:#0d9488;background:#ccfbf1;border-radius:20px;padding:2px 8px;margin-right:6px}
+.arrow{color:#94a3b8;font-size:18px}
+/* ---------- 底部导航 ---------- */
+#tabbar{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:0 auto;display:flex;background:#fff;border-top:1px solid #e2e8f0;padding:6px 0 calc(6px + env(safe-area-inset-bottom));z-index:50}
+.tabbtn{flex:1;border:none;background:none;padding:4px 0;cursor:pointer;color:#94a3b8;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px;touch-action:manipulation}
+.tabbtn svg{width:22px;height:22px}
+.tabbtn.on{color:#0d9488}
+/* ---------- 训练详情 ---------- */
+#view-detail{position:fixed;inset:0;max-width:520px;margin:0 auto;background:#f0fdfa;z-index:100;overflow-y:auto;padding:0 16px 40px;display:none}
+#view-detail.active{display:block}
+.topbar{display:flex;align-items:center;gap:10px;padding:14px 0;position:sticky;top:0;background:#f0fdfa;z-index:5}
+#btnBack{border:none;background:#ccfbf1;color:#0f766e;width:34px;height:34px;border-radius:50%;font-size:17px;cursor:pointer}
+#dTitle{font-size:17px;font-weight:800;color:#0f766e;flex:1}
+#btnSound{border:none;background:#e0f2fe;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+.sceneCard{background:#fff;border-radius:16px;padding:8px;box-shadow:0 2px 10px rgba(13,148,136,.08)}
+.scene svg{width:100%;height:auto;display:block}
+.scene *{transform-box:view-box}
+.guide{display:flex;flex-direction:column;align-items:center;margin-top:16px}
+#bubble{width:132px;height:132px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,#14b8a6,#0ea5e9);box-shadow:0 8px 24px rgba(14,165,233,.35)}
+#phaseName{font-size:19px;font-weight:800;letter-spacing:4px}
+#count{font-size:30px;font-weight:800}
+#phaseHint{margin-top:10px;font-size:14px;color:#0f766e;min-height:20px;text-align:center}
+.metaRow{display:flex;justify-content:center;gap:10px;margin-top:10px;font-size:12px;color:#64748b}
+.metaRow span{background:#fff;border-radius:20px;padding:4px 12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.cycles{display:flex;justify-content:center;gap:10px;margin-top:12px}
+.cyc{border:1px solid #99f6e4;background:#fff;color:#0f766e;border-radius:20px;padding:6px 16px;font-size:13px;cursor:pointer}
+.cyc.on{background:#0d9488;color:#fff;border-color:#0d9488}
+.ctrls{display:flex;gap:12px;margin-top:16px}
+#btnStart{flex:2;border:none;border-radius:14px;padding:14px 0;font-size:16px;font-weight:700;color:#fff;background:linear-gradient(90deg,#0d9488,#0ea5e9);cursor:pointer;letter-spacing:2px;touch-action:manipulation}
+#btnReset{flex:1;border:none;border-radius:14px;padding:14px 0;font-size:15px;color:#0f766e;background:#ccfbf1;cursor:pointer}
+.stepCard{background:#fff;border-radius:16px;padding:16px;margin-top:16px;box-shadow:0 2px 10px rgba(13,148,136,.08)}
+.stepCard h4{color:#0f766e;font-size:14px;margin-bottom:8px}
+.stepCard li{font-size:13px;color:#475569;margin:7px 0 7px 18px;line-height:1.65}
+.stepCard li.tip{list-style:none;margin-left:0;padding-left:22px;position:relative}
+.stepCard li.tip::before{content:"💡";position:absolute;left:0}
+.safeNote{margin-top:14px;font-size:11px;color:#94a3b8;text-align:center;line-height:1.7}
+.footer{margin-top:22px;text-align:center;font-size:11px;color:#94a3b8;line-height:1.8}
+#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#0f766e;color:#fff;border-radius:30px;padding:10px 22px;font-size:14px;z-index:200;display:none;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+/* ---------- 动画引擎 ---------- */
+@keyframes scaleVar{from{transform:scale(var(--fs,1))}to{transform:scale(var(--ts,1))}}
+@keyframes yVar{from{transform:translateY(var(--fy,0px))}to{transform:translateY(var(--ty,0px))}}
+@keyframes oVar{from{opacity:var(--fo,1)}to{opacity:var(--to,1)}}
+.phase-in #bubble{--fs:1;--ts:1.22;animation:scaleVar var(--dur) ease-in-out forwards;background:linear-gradient(135deg,#14b8a6,#2dd4bf)}
+.phase-out #bubble{--fs:1.22;--ts:1;animation:scaleVar var(--dur) ease-in-out forwards;background:linear-gradient(135deg,#0ea5e9,#38bdf8)}
+.phase-hold #bubble{transform:scale(1.22);background:linear-gradient(135deg,#f59e0b,#fbbf24)}
+.paused #bubble,.paused .scene *{animation-play-state:paused!important}
+/* 腹式：腹部起伏 */
+.phase-in .belly{--fs:1;--ts:1.3;animation:scaleVar var(--dur) ease-in-out forwards}
+.phase-out .belly{--fs:1.3;--ts:1;animation:scaleVar var(--dur) ease-in-out forwards}
+.phase-hold .belly{transform:scale(1.3)}
+/* 缩唇：气流 */
+.airin,.airout{opacity:0}
+.phase-in .airin{--fo:0;--to:1;animation:oVar calc(var(--dur)*.5) ease forwards}
+.phase-out .airout{--fo:0;--to:1;animation:oVar calc(var(--dur)*.5) ease forwards}
+/* 气球 */
+.balloon{transform:scale(.55)}
+.phase-in .balloon{--fs:.6;--ts:.55;animation:scaleVar var(--dur) ease-in-out forwards}
+.phase-out .balloon{--fs:.55;--ts:1.35;animation:scaleVar var(--dur) ease-in-out forwards}
+/* 肺量计：小球升降 */
+.phase-in .lift{--fy:0px;--ty:-62px;animation:yVar var(--dur) ease-in-out forwards}
+.phase-out .lift{--fy:-62px;--ty:0px;animation:yVar var(--dur) ease-in-out forwards}
+.phase-hold .lift{transform:translateY(-62px)}
+/* 哈气排痰 */
+.phase-in .lungs{--fs:1;--ts:1.1;animation:scaleVar var(--dur) ease-in-out forwards}
+.phase-out .lungs{--fs:1.1;--ts:1;animation:scaleVar var(--dur) ease-in-out forwards}
+.phase-hold .lungs{transform:scale(1.1)}
+.phase-in .sput{--fo:0;--to:1;animation:oVar calc(var(--dur)*.7) ease forwards}
+.phase-out .sput{--fy:0px;--ty:-52px;--fo:1;--to:0;animation:yVar var(--dur) ease-in forwards,oVar var(--dur) ease-in forwards}
+.phase-hold .sput{opacity:1}
+/* 呼吸操：举臂 */
+.armsUp{opacity:0}
+.phase-in .armsUp{--fo:0;--to:1;animation:oVar calc(var(--dur)*.8) ease forwards}
+.phase-in .armsDown{--fo:1;--to:0;animation:oVar calc(var(--dur)*.8) ease forwards}
+.phase-out .armsUp{--fo:1;--to:0;animation:oVar calc(var(--dur)*.8) ease forwards}
+.phase-out .armsDown{--fo:0;--to:1;animation:oVar calc(var(--dur)*.8) ease forwards}
+.phase-hold .armsUp{opacity:1}
+.phase-hold .armsDown{opacity:0}
+</style>
+</head>
+<body>
+
+<!-- ============ 首页 ============ -->
+<section id="view-home" class="view active">
+  <header class="hero">
+    <div class="logoWrap">
+      <!-- 内置矢量LOGO：壶公山叠翠 × 木兰溪蜿蜒交织 -->
+      <svg viewBox="0 0 120 120" aria-label="壶兰呼吸LOGO">
+        <defs>
+          <linearGradient id="lgM" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#5eead4"/><stop offset=".5" stop-color="#10b981"/><stop offset="1" stop-color="#0f766e"/>
+          </linearGradient>
+          <linearGradient id="lgR" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#bae6fd"/><stop offset="1" stop-color="#0284c7"/>
+          </linearGradient>
+          <clipPath id="lgC"><circle cx="60" cy="60" r="57"/></clipPath>
+        </defs>
+        <circle cx="60" cy="60" r="57" fill="#ecfdf5"/>
+        <g clip-path="url(#lgC)">
+          <circle cx="88" cy="28" r="8" fill="#fde68a"/>
+          <path d="M4 92 L34 46 L48 66 L62 28 L80 60 L94 46 L116 92 Z" fill="url(#lgM)"/>
+          <path d="M4 98 L26 70 L40 84 L56 60 L72 86 L90 68 L116 98 Z" fill="#059669" opacity=".5"/>
+          <path d="M62 30 C 54 44 78 50 70 62 C 62 74 42 72 42 84 C 42 96 64 94 68 114" fill="none" stroke="url(#lgR)" stroke-width="9" stroke-linecap="round"/>
+          <path d="M70 62 C 78 70 88 72 88 82 C 88 92 78 96 78 112" fill="none" stroke="url(#lgR)" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+          <path d="M62 34 C 56 44 74 50 68 60" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+        </g>
+        <circle cx="60" cy="60" r="57" fill="none" stroke="#0d9488" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <h1>壶兰呼吸</h1>
+    <p class="sub">呼吸康复训练助手 · 壶公山畔 木兰溪旁</p>
+    <p class="org">莆田学院附属医院 呼吸与危重症医学科三区</p>
+  </header>
+  <div class="card stats">
+    <div class="stat"><b id="stToday">0</b><span>今日训练（次）</span></div>
+    <div class="stat"><b id="stTotal">0</b><span>累计训练（次）</span></div>
+  </div>
+  <div class="card">
+    <h3>⚡ 快速开始</h3>
+    <div class="quick">
+      <button class="qbtn" style="background:#0d9488" onclick="openDetail('fushi')">🧘<br>腹式呼吸</button>
+      <button class="qbtn" style="background:#0ea5e9" onclick="openDetail('suochun')">😙<br>缩唇呼吸</button>
+      <button class="qbtn" style="background:#8b5cf6" onclick="openDetail('cao')">🤸<br>呼吸操</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>⚠️ 安全须知</h3>
+    <ul class="notice">
+      <li>急性发作期（严重感染、大咯血、未控制心衰、气胸等）暂停训练；</li>
+      <li>训练中出现头晕、心悸、胸闷、手脚发麻，立即停止休息；</li>
+      <li>循序渐进，以不感到疲劳为度；</li>
+      <li>本应用为康复辅助工具，请遵医嘱进行训练。</li>
+    </ul>
+  </div>
+  <p class="footer">制作：莆田学院附属医院 呼吸与危重症医学科三区<br>壶兰呼吸 v1.0</p>
+</section>
+
+<!-- ============ 训练列表 ============ -->
+<section id="view-train" class="view">
+  <div class="pageTitle">训练方案</div>
+  <div class="pageSub">点击卡片进入动画引导训练</div>
+  <div id="trainList"></div>
+  <p class="footer">制作：莆田学院附属医院 呼吸与危重症医学科三区</p>
+</section>
+
+<!-- ============ 关于 ============ -->
+<section id="view-me" class="view">
+  <div class="pageTitle">关于</div>
+  <div class="card">
+    <h3>🏥 制作单位</h3>
+    <p style="font-size:14px;line-height:1.8;color:#475569">莆田学院附属医院<br><b style="color:#0f766e">呼吸与危重症医学科三区</b></p>
+  </div>
+  <div class="card">
+    <h3>🌿 关于「壶兰呼吸」</h3>
+    <p style="font-size:13px;line-height:1.8;color:#475569">「壶兰」取自莆田<b>壶公山</b>与<b>木兰溪</b>。山溪交织，如呼吸之吐纳往复。本应用面向慢阻肺、哮喘、胸腹部术后等患者，提供动画引导式呼吸康复训练，帮助改善肺功能、缓解呼吸困难。</p>
+  </div>
+  <div class="card">
+    <h3>📖 使用说明</h3>
+    <ul class="notice">
+      <li>每日 2–3 次，每次 10–15 分钟，循序渐进；</li>
+      <li>训练时保持肩颈放松，深吸慢呼；</li>
+      <li>完成训练后自动打卡记录；</li>
+      <li>交互设计参考 GitHub 开源呼吸训练项目（Breathly、ZenFlow、Calmness 等）。</li>
+    </ul>
+  </div>
+  <p class="footer">壶兰呼吸 v1.0<br>莆田学院附属医院 呼吸与危重症医学科三区</p>
+</section>
+
+<!-- ============ 训练详情 ============ -->
+<section id="view-detail">
+  <div class="topbar">
+    <button id="btnBack" onclick="closeDetail()">←</button>
+    <span id="dTitle">训练</span>
+    <button id="btnSound" onclick="toggleSound()">🔔</button>
+  </div>
+  <div class="sceneCard"><div class="scene" id="sceneBox"></div></div>
+  <div class="guide">
+    <div id="bubble"><span id="phaseName">准备</span><span id="count">–</span></div>
+    <div id="phaseHint">选择组数后点击「开始训练」</div>
+  </div>
+  <div class="metaRow"><span id="cycleInfo">第 1 / 5 组</span><span id="ratioBadge"></span></div>
+  <div class="cycles">
+    <button class="cyc on" data-c="5">5 组</button>
+    <button class="cyc" data-c="10">10 组</button>
+    <button class="cyc" data-c="15">15 组</button>
+  </div>
+  <div class="ctrls">
+    <button id="btnStart" onclick="onStart()">开始训练</button>
+    <button id="btnReset" onclick="reset()">重置</button>
+  </div>
+  <div class="stepCard"><h4>📋 动作步骤</h4><ul id="stepsBox"></ul></div>
+  <div class="stepCard"><h4>💡 训练要点</h4><ul id="tipsBox"></ul></div>
+  <p class="safeNote">如出现头晕、心悸、胸闷请立即停止 · 请遵医嘱训练<br>莆田学院附属医院 呼吸与危重症医学科三区</p>
+</section>
+
+<nav id="tabbar">
+  <button class="tabbtn on" data-v="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8v10a1 1 0 01-1 1h-5v-7h-6v7H4a1 1 0 01-1-1z"/></svg>首页</button>
+  <button class="tabbtn" data-v="train"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v6M12 10c-2 0-3.5-1.5-5.5-1.5C3.5 8.5 2.5 11.5 2.5 14.5S4 21 7 21c2 0 3-1 5-1s3 1 5 1c3 0 4.5-3.5 4.5-6.5S20.5 8.5 17.5 8.5C15.5 8.5 14 10 12 10z"/></svg>训练</button>
+  <button class="tabbtn" data-v="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>关于</button>
+</nav>
+<div id="toast"></div>
+
+<script>
+/* ================= 训练数据 ================= */
+const TRAININGS=[
+{id:'fushi',name:'腹式呼吸',icon:'🧘',color:'#0d9488',desc:'增强膈肌力量，增加肺活量，减少呼吸功耗',tags:['核心训练','慢阻肺适用'],ratio:'吸:呼 ≈ 1:2',
+ phases:[{k:'in',name:'吸气',hint:'用鼻缓慢吸气 · 腹部鼓起',dur:4},{k:'out',name:'呼气',hint:'缩唇缓慢呼气 · 腹部凹陷',dur:8}],
+ steps:['取舒适坐位或半卧位，全身放松，肩颈放松。','一手放于胸前，一手放于腹部（脐部）。','用鼻缓慢吸气，感受腹部鼓起（腹部的手被抬起），胸部尽量不动。','用口缓慢呼气，腹部自然凹陷。','深吸慢呼，每分钟约 7–8 次。'],
+ tips:['每次 10–15 分钟，每日 2–3 次。','循序渐进，初练者呼气可先缩短至 6 秒。','如感头晕，暂停休息。']},
+{id:'suochun',name:'缩唇呼吸',icon:'😙',color:'#0ea5e9',desc:'防止小气道过早陷闭，促进肺内残气排出',tags:['缓解气促','随时随地'],ratio:'吸:呼 = 1:2~1:3',
+ phases:[{k:'in',name:'吸气',hint:'闭口用鼻吸气 2–3 秒',dur:3},{k:'out',name:'呼气',hint:'缩唇如吹口哨 · 缓慢均匀呼气',dur:6}],
+ steps:['放松肩颈，用鼻吸气 2–3 秒。','嘴唇缩成“吹口哨”状。','缓慢均匀呼气 4–6 秒。','呼气力度以使蜡烛火焰倾斜而不灭为宜。'],
+ tips:['可与腹式呼吸结合练习。','活动后气促时立即使用，可快速缓解。']},
+{id:'qiqiu',name:'吹气球 / 吹水泡',icon:'🎈',color:'#f59e0b',desc:'简易阻力呼气训练，增加肺活量',tags:['趣味训练','居家简易'],ratio:'吸3秒 · 吹5秒',
+ phases:[{k:'in',name:'吸气',hint:'深吸一口气',dur:3},{k:'out',name:'吹气',hint:'口含气球口 · 均匀缓慢吹气',dur:5}],
+ steps:['准备气球一只（或水杯+吸管吹水泡）。','深吸气后，口含气球口缓慢吹气约 5 秒。','吹气时感受腹部内收、均匀用力。','休息片刻，重复 5–10 次。'],
+ tips:['吹水泡法：吸管插入水中，吹出均匀水泡。','避免过度用力导致头晕。']},
+{id:'feiliangji',name:'激励式肺量计',icon:'🎚️',color:'#14b8a6',desc:'鼓励深吸气，预防肺不张，常用于术后康复',tags:['术后康复','肺扩张'],ratio:'吸4 · 屏3 · 呼3',
+ phases:[{k:'in',name:'深吸气',hint:'含住咬嘴 · 慢吸气使小球升至目标刻度',dur:4},{k:'hold',name:'屏气',hint:'保持小球悬浮 2–3 秒',dur:3},{k:'out',name:'呼气',hint:'移开咬嘴 · 缓慢呼气',dur:3}],
+ steps:['手持训练器，先正常呼气。','含住咬嘴，缓慢深吸气使活塞/小球升至目标刻度。','屏气 2–3 秒，保持小球悬浮。','移开咬嘴缓慢呼气，休息片刻重复。'],
+ tips:['每组 5–10 次，常用于胸腹部术后。','如有胸痛，减小吸气幅度并咨询医护。']},
+{id:'huff',name:'有效咳嗽 / 哈气',icon:'🗣️',color:'#ef4444',desc:'气道廓清技术，松动并排出深部痰液',tags:['排痰','痰多适用'],ratio:'吸3 · 屏2 · 哈3',
+ phases:[{k:'in',name:'深吸气',hint:'坐位稍前倾 · 缓慢深吸气',dur:3},{k:'hold',name:'屏气',hint:'屏气 2–3 秒',dur:2},{k:'out',name:'哈气',hint:'张口“哈”气 2–3 次 · 再短促咳嗽',dur:3}],
+ steps:['坐位，身体稍前倾。','缓慢深吸气后屏气 2–3 秒。','张口做“哈气”动作 2–3 次，将深部痰液移至大气道。','再短促有力咳嗽 2–3 次，将痰咳出。'],
+ tips:['避免连续剧烈咳嗽。','咳痰后漱口；大咯血者禁用。']},
+{id:'cao',name:'呼吸操',icon:'🤸',color:'#8b5cf6',desc:'肢体动作配合呼吸，增加胸廓活动度',tags:['全身训练','晨练适用'],ratio:'举臂吸4 · 放下呼6',
+ phases:[{k:'in',name:'吸气',hint:'双臂缓慢上举过头 · 用鼻吸气',dur:4},{k:'out',name:'呼气',hint:'双臂缓慢放下 · 缩唇呼气',dur:6}],
+ steps:['站立或坐位，双脚分开与肩同宽。','双臂缓慢上举过头，同时用鼻吸气。','双臂缓慢放下，同时缩唇呼气。','可配合扩胸、转体动作，每个动作 8–10 次。'],
+ tips:['动作舒缓，与呼吸节奏配合。','以不感疲劳为度。']}
+];
+
+/* ================= 动画场景 SVG ================= */
+const SCENES={
+fushi:`<svg viewBox="0 0 220 160"><line x1="30" y1="140" x2="190" y2="140" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round"/><circle cx="110" cy="30" r="16" fill="#ccfbf1" stroke="#0f766e" stroke-width="3"/><path d="M110 46 C 86 52 82 80 85 112 L135 112 C138 80 134 52 110 46 Z" fill="#f0fdfa" stroke="#0f766e" stroke-width="3"/><circle cx="110" cy="64" r="5" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="3 3"/><circle class="belly" style="transform-origin:110px 96px" cx="110" cy="96" r="19" fill="#5eead4" stroke="#0d9488" stroke-width="3"/><path d="M85 70 C 76 84 82 96 94 103" fill="none" stroke="#0f766e" stroke-width="3" stroke-linecap="round"/><path d="M135 70 C 144 84 138 96 126 103" fill="none" stroke="#0f766e" stroke-width="3" stroke-linecap="round"/><text x="150" y="100" font-size="11" fill="#0d9488">腹部起伏</text><text x="140" y="66" font-size="11" fill="#94a3b8">胸部不动</text></svg>`,
+suochun:`<svg viewBox="0 0 220 160"><circle cx="80" cy="70" r="34" fill="#e0f2fe" stroke="#0369a1" stroke-width="3"/><path d="M112 62 l12 6 l-12 6" fill="#e0f2fe" stroke="#0369a1" stroke-width="3" stroke-linejoin="round"/><circle cx="116" cy="86" r="6" fill="none" stroke="#0369a1" stroke-width="3"/><g class="airin" stroke="#14b8a6" stroke-width="3" fill="none" stroke-linecap="round"><path d="M146 58 h-16"/><path d="M136 53 l-6 5 l6 5"/></g><g class="airout" stroke="#0ea5e9" stroke-width="3" fill="none" stroke-linecap="round"><path d="M130 86 q8 -5 16 0 t16 0"/><path d="M130 96 q8 -5 16 0 t16 0"/><path d="M134 76 q8 -5 16 0"/></g><text x="60" y="130" font-size="11" fill="#0369a1">鼻吸</text><text x="150" y="116" font-size="11" fill="#0ea5e9">缩唇缓呼</text></svg>`,
+qiqiu:`<svg viewBox="0 0 220 160"><circle cx="52" cy="70" r="16" fill="#fef3c7" stroke="#b45309" stroke-width="3"/><path d="M66 74 C 84 78 92 74 102 72" fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round"/><g class="balloon" style="transform-origin:136px 70px"><circle cx="136" cy="70" r="26" fill="#fda4af" stroke="#e11d48" stroke-width="3"/><path d="M112 70 l-6 -5 v10 Z" fill="#e11d48"/><path d="M126 58 q6 -6 12 -4" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g><text x="80" y="130" font-size="11" fill="#b45309">深吸气后均匀吹气，气球逐渐胀大</text></svg>`,
+feiliangji:`<svg viewBox="0 0 220 160"><rect x="80" y="24" width="84" height="112" rx="12" fill="#f0fdfa" stroke="#0f766e" stroke-width="3"/><line x1="92" y1="52" x2="152" y2="52" stroke="#99f6e4" stroke-width="2" stroke-dasharray="4 4"/><line x1="92" y1="76" x2="152" y2="76" stroke="#99f6e4" stroke-width="2" stroke-dasharray="4 4"/><circle cx="104" cy="122" r="6" fill="#99f6e4"/><circle cx="140" cy="122" r="6" fill="#99f6e4"/><circle class="lift" cx="122" cy="120" r="9" fill="#0d9488"/><path d="M80 56 C 60 56 56 66 42 66" fill="none" stroke="#0f766e" stroke-width="4" stroke-linecap="round"/><rect x="30" y="60" width="14" height="12" rx="3" fill="#0f766e"/><text x="60" y="152" font-size="11" fill="#0f766e">深吸气使小球上升，屏气保持</text></svg>`,
+huff:`<svg viewBox="0 0 220 160"><path d="M110 14 v14 m0 0 l-11 11 m11 -11 l11 11" fill="none" stroke="#0f766e" stroke-width="4" stroke-linecap="round"/><g class="lungs" style="transform-origin:110px 62px"><path d="M98 42 C 76 50 70 80 77 100 C 83 111 96 108 100 97 C 104 82 102 58 98 42 Z" fill="#fecdd3" stroke="#e11d48" stroke-width="3"/><path d="M122 42 C 144 50 150 80 143 100 C 137 111 124 108 120 97 C 116 82 118 58 122 42 Z" fill="#fecdd3" stroke="#e11d48" stroke-width="3"/></g><g class="sput" fill="#f59e0b"><circle cx="110" cy="64" r="4"/><circle cx="103" cy="76" r="3"/><circle cx="117" cy="76" r="3"/></g><text x="66" y="140" font-size="11" fill="#e11d48">深吸气 → 屏气 → “哈”气排痰</text></svg>`,
+cao:`<svg viewBox="0 0 220 160"><circle cx="110" cy="34" r="13" fill="#ede9fe" stroke="#6d28d9" stroke-width="3"/><line x1="110" y1="47" x2="110" y2="94" stroke="#6d28d9" stroke-width="4" stroke-linecap="round"/><line x1="110" y1="94" x2="90" y2="128" stroke="#6d28d9" stroke-width="4" stroke-linecap="round"/><line x1="110" y1="94" x2="130" y2="128" stroke="#6d28d9" stroke-width="4" stroke-linecap="round"/><g class="armsDown" stroke="#6d28d9" stroke-width="4" stroke-linecap="round"><line x1="110" y1="56" x2="82" y2="84"/><line x1="110" y1="56" x2="138" y2="84"/></g><g class="armsUp" stroke="#6d28d9" stroke-width="4" stroke-linecap="round"><line x1="110" y1="56" x2="80" y2="28"/><line x1="110" y1="56" x2="140" y2="28"/></g><text x="62" y="150" font-size="11" fill="#6d28d9">举臂吸气 · 放下呼气</text></svg>`
+};
+
+/* ================= 导航 ================= */
+const $=s=>document.querySelector(s);
+document.querySelectorAll('.tabbtn').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabbtn').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  $('#view-'+b.dataset.v).classList.add('active');
+});
+
+/* ================= 训练列表 ================= */
+$('#trainList').innerHTML=TRAININGS.map(t=>`
+<div class="tItem" onclick="openDetail('${t.id}')">
+  <div class="tIcon" style="background:${t.color}22">${t.icon}</div>
+  <div class="tInfo"><b>${t.name}</b><p>${t.desc}</p>
+    <div class="tags">${t.tags.map(x=>`<span class="tag">${x}</span>`).join('')}</div></div>
+  <span class="arrow">›</span>
+</div>`).join('');
+
+/* ================= 详情 & 训练引擎 ================= */
+let S={t:null,pi:0,cycle:1,cycles:5,remain:0,tick:null,running:false,started:false,sound:true};
+function openDetail(id){
+  S.t=TRAININGS.find(t=>t.id===id);reset();
+  $('#dTitle').textContent=S.t.icon+' '+S.t.name;
+  $('#sceneBox').innerHTML=SCENES[id];
+  $('#ratioBadge').textContent=S.t.ratio;
+  $('#stepsBox').innerHTML=S.t.steps.map(s=>`<li>${s}</li>`).join('');
+  $('#tipsBox').innerHTML=S.t.tips.map(s=>`<li class="tip">${s}</li>`).join('');
+  $('#view-detail').classList.add('active');
+  $('#view-detail').scrollTop=0;
+}
+function closeDetail(){$('#view-detail').classList.remove('active');clearInterval(S.tick);}
+function toggleSound(){S.sound=!S.sound;$('#btnSound').textContent=S.sound?'🔔':'🔕';}
+document.querySelectorAll('.cyc').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.cyc').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');S.cycles=+b.dataset.c;updCycle();
+});
+function updCycle(){$('#cycleInfo').textContent=`第 ${S.cycle} / ${S.cycles} 组`;}
+
+function setPhase(i){
+  const ph=S.t.phases[i];S.pi=i;S.remain=ph.dur;
+  const root=$('#view-detail');
+  root.classList.remove('phase-in','phase-hold','phase-out');
+  root.classList.add('phase-'+ph.k);
+  root.style.setProperty('--dur',ph.dur+'s');
+  $('#phaseName').textContent=ph.name;
+  $('#phaseHint').textContent=ph.hint;
+  $('#count').textContent=ph.dur;
+  beep(ph.k);if(navigator.vibrate)navigator.vibrate(50);
+}
+function onStart(){
+  if(S.running){pause();return;}
+  if(!S.started){S.started=true;S.cycle=1;updCycle();setPhase(0);}
+  S.running=true;$('#view-detail').classList.remove('paused');
+  $('#btnStart').textContent='暂停';
+  S.tick=setInterval(step,1000);
+}
+function step(){
+  S.remain--;
+  if(S.remain<=0){
+    if(S.pi+1<S.t.phases.length)setPhase(S.pi+1);
+    else{
+      S.cycle++;
+      if(S.cycle>S.cycles){finish();return;}
+      updCycle();setPhase(0);
+    }
+  }else $('#count').textContent=S.remain;
+}
+function pause(){S.running=false;clearInterval(S.tick);$('#view-detail').classList.add('paused');$('#btnStart').textContent='继续';}
+function reset(){
+  clearInterval(S.tick);S.running=false;S.started=false;S.cycle=1;S.pi=0;
+  const root=$('#view-detail');
+  root.classList.remove('phase-in','phase-hold','phase-out','paused');
+  $('#phaseName').textContent='准备';$('#count').textContent='–';
+  $('#phaseHint').textContent='选择组数后点击「开始训练」';
+  $('#btnStart').textContent='开始训练';updCycle();
+}
+function finish(){
+  clearInterval(S.tick);S.running=false;
+  $('#view-detail').classList.remove('phase-in','phase-hold','phase-out');
+  $('#phaseName').textContent='完成';$('#count').textContent='🎉';
+  $('#phaseHint').textContent='训练完成，已自动打卡！';
+  $('#btnStart').textContent='再来一次';S.started=false;
+  save();toast('🎉 完成训练，已打卡记录！');
+}
+/* 提示音 */
+let AC;
+function beep(k){
+  if(!S.sound)return;
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(),g=AC.createGain();
+    o.frequency.value=k==='in'?523:k==='hold'?659:392;
+    g.gain.setValueAtTime(.0001,AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(.2,AC.currentTime+.05);
+    g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+.4);
+    o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+.45);
+  }catch(e){}
+}
+/* 打卡统计 */
+function save(){
+  const d=new Date().toDateString();
+  if(localStorage.hl_date!==d){localStorage.hl_date=d;localStorage.hl_today=0;}
+  localStorage.hl_today=(+localStorage.hl_today||0)+1;
+  localStorage.hl_total=(+localStorage.hl_total||0)+1;
+  loadStats();
+}
+function loadStats(){
+  const d=new Date().toDateString();
+  $('#stToday').textContent=localStorage.hl_date===d?(+localStorage.hl_today||0):0;
+  $('#stTotal').textContent=(+localStorage.hl_total||0);
+}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2200);}
+loadStats();
+</script>
+</body>
+</html>
