@@ -11,7 +11,7 @@
 body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f0fdfa;color:#134e4a;max-width:520px;margin:0 auto;min-height:100vh;position:relative}
 .view{display:none;padding:16px 16px calc(92px + env(safe-area-inset-bottom))}
 .view.active{display:block}
-/* ---------- 首页 ---------- */
+#bootError{padding:40px 20px;text-align:center;font-size:14px;color:#b91c1c;line-height:1.9}
 .hero{text-align:center;padding:26px 0 6px}
 .logoWrap{width:112px;height:112px;margin:0 auto;border-radius:50%;overflow:hidden;box-shadow:0 6px 18px rgba(13,148,136,.25);background:#ecfdf5}
 .logoWrap svg{width:100%;height:100%;display:block}
@@ -26,21 +26,25 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 .stat span{font-size:12px;color:#475569}
 .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .qbtn{border:none;border-radius:12px;padding:12px 4px;font-size:13px;color:#fff;cursor:pointer;line-height:1.4;touch-action:manipulation}
+.emBanner{margin-top:14px;background:linear-gradient(90deg,#dc2626,#ef4444);color:#fff;border-radius:14px;padding:13px 12px;font-size:13px;font-weight:bold;text-align:center;box-shadow:0 4px 12px rgba(220,38,38,.3);cursor:pointer}
 .notice li{font-size:13px;color:#475569;margin:6px 0 6px 18px;line-height:1.6}
-/* ---------- 疾病选择页 ---------- */
-#view-disease{position:fixed;inset:0;max-width:520px;margin:0 auto;background:#f0fdfa;z-index:200;overflow-y:auto;padding:24px 16px;display:none}
+.trainNotice{background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:12px;font-size:13px;color:#7f1d1d;line-height:1.7;margin-top:12px}
+#view-disease{position:fixed;inset:0;max-width:520px;margin:0 auto;background:#f0fdfa;z-index:200;overflow-y:auto;padding:24px 16px 40px;display:none}
 #view-disease.active{display:block}
-.dItem{display:flex;align-items:center;gap:14px;background:#fff;border-radius:16px;padding:16px;margin-top:12px;box-shadow:0 2px 10px rgba(13,148,136,.08);cursor:pointer;border:2px solid transparent}
+.dItem{display:flex;align-items:center;gap:14px;background:#fff;border-radius:16px;padding:14px;margin-top:12px;box-shadow:0 2px 10px rgba(13,148,136,.08);cursor:pointer;border:2px solid transparent}
 .dItem:active{transform:scale(.98)}
 .dItem.selected{border-color:#0d9488;background:#f0fdfa}
-.dIcon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
-.dInfo b{font-size:15px;color:#134e4a}
+.dIcon{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.dInfo{flex:1}
+.dInfo b{font-size:14px;color:#134e4a}
 .dInfo p{font-size:12px;color:#64748b;margin-top:4px}
-/* ---------- 训练列表 ---------- */
+.dCheck{color:#0d9488;font-size:20px;font-weight:800}
 .pageTitle{font-size:20px;font-weight:800;color:#0f766e;padding:14px 0 4px}
 .pageSub{font-size:12px;color:#64748b;margin-bottom:8px}
 .tItem{display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:14px;margin-top:12px;box-shadow:0 2px 10px rgba(13,148,136,.08);cursor:pointer;position:relative}
-.tIcon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;position:relative}
+.tItem.disabled{opacity:.55;filter:grayscale(.9);background:#f1f5f9}
+.tItem.disabled .tInfo b{color:#94a3b8}
+.tIcon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
 .tInfo{flex:1}
 .tInfo b{font-size:15px;color:#134e4a}
 .tInfo p{font-size:12px;color:#64748b;margin-top:3px;line-height:1.5}
@@ -49,21 +53,32 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 .arrow{color:#94a3b8;font-size:18px}
 .recBadge{position:absolute;top:-8px;right:-8px;background:#ef4444;color:#fff;font-size:10px;padding:3px 8px;border-radius:12px;box-shadow:0 2px 6px rgba(239,68,68,.4);font-weight:bold;z-index:2}
 .tItem.recommended{border:2px solid #10b981;background:#f0fdfa}
-/* ---------- 评估页 ---------- */
 .assessIntro{background:#e0f2fe;border-radius:12px;padding:12px;font-size:13px;color:#0369a1;margin-bottom:16px;line-height:1.6}
 .qCard{background:#fff;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 .qTitle{font-size:14px;font-weight:bold;color:#134e4a;margin-bottom:10px;line-height:1.5}
 .qOpts label{display:block;padding:12px;border:1px solid #e2e8f0;border-radius:10px;margin-top:8px;cursor:pointer;font-size:13px;color:#475569;transition:all .2s}
-.qOpts label:active{background:#f8fafc}
 .qOpts input{display:none}
 .qOpts label.checked{border-color:#0d9488;background:#f0fdfa;color:#0f766e;font-weight:bold}
-.submitBtn{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(90deg,#0d9488,#0ea5e9);color:#fff;font-size:16px;font-weight:bold;letter-spacing:2px;cursor:pointer;margin-top:10px;touch-action:manipulation}
+.btnRow{display:flex;gap:12px;margin-top:10px}
+.submitBtn{flex:2;padding:14px;border:none;border-radius:14px;background:linear-gradient(90deg,#0d9488,#0ea5e9);color:#fff;font-size:16px;font-weight:bold;letter-spacing:2px;cursor:pointer;touch-action:manipulation}
 .submitBtn:disabled{background:#cbd5e1;cursor:not-allowed}
+.resetBtn{flex:1;border:none;border-radius:14px;padding:14px 0;font-size:15px;color:#64748b;background:#e2e8f0;cursor:pointer}
 .resultCard{background:#fff;border-radius:16px;padding:20px;margin-top:16px;text-align:center;box-shadow:0 4px 16px rgba(13,148,136,.15);border-top:4px solid #0d9488}
 .resultCard h3{font-size:18px;color:#0f766e;margin-bottom:10px}
 .resultCard .score{font-size:36px;font-weight:800;margin:10px 0}
 .resultCard .advice{font-size:14px;color:#475569;line-height:1.7;text-align:left;background:#f8fafc;padding:12px;border-radius:10px;margin-top:12px}
-/* ---------- 统计与我的 ---------- */
+.chartEmpty{font-size:12px;color:#94a3b8;text-align:center;padding:10px 0}
+.eduGroup{margin-top:14px}
+.eduGroupTitle{font-size:14px;font-weight:bold;color:#0f766e;margin-bottom:6px}
+.eduList{list-style:none}
+.eduList li{display:flex;gap:8px;margin:8px 0;font-size:13px;color:#475569;line-height:1.65}
+.dot{width:6px;height:6px;border-radius:50%;background:#14b8a6;margin-top:7px;flex-shrink:0}
+.emergency{background:#fef2f2;border:1px solid #fecaca}
+.emergency h3{color:#b91c1c}
+.emergency ul{list-style:none}
+.emergency li{font-size:13px;color:#7f1d1d;margin:9px 0;line-height:1.6}
+.emNote{margin-top:10px;font-size:13px;font-weight:bold;color:#b91c1c}
+.call120{display:block;margin-top:12px;text-align:center;background:#dc2626;color:#fff;border-radius:12px;padding:13px 0;font-size:16px;font-weight:bold;text-decoration:none}
 .bigStat{display:flex;gap:12px;margin-bottom:14px}
 .bigStat .card{flex:1;text-align:center;margin-top:0;padding:20px 10px}
 .bigStat b{font-size:32px;color:#0d9488;display:block;font-weight:800}
@@ -71,20 +86,18 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 .calWrap{display:grid;grid-template-columns:repeat(7, 1fr);gap:6px;margin-top:10px}
 .calHead{font-size:11px;color:#94a3b8;text-align:center;font-weight:bold}
 .calDay{aspect-ratio:1;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#94a3b8}
-.calDay.active{background:#0d9488;color:#fff;font-weight:bold;box-shadow:0 2px 6px rgba(13,148,136,.3)}
+.calDay.active{background:#0d9488;color:#fff;font-weight:bold}
 .calDay.today{border:2px solid #0ea5e9}
 .barChart{margin-top:14px}
 .barItem{margin-bottom:12px}
 .barLabel{display:flex;justify-content:space-between;font-size:13px;color:#475569;margin-bottom:4px}
 .barTrack{height:10px;background:#e2e8f0;border-radius:5px;overflow:hidden}
-.barFill{height:100%;background:linear-gradient(90deg,#14b8a6,#0ea5e9);border-radius:5px;transition:width .5s ease}
+.barFill{height:100%;background:linear-gradient(90deg,#14b8a6,#0ea5e9);border-radius:5px}
 .settingBtn{display:block;width:100%;padding:14px;border:1px dashed #94a3b8;border-radius:12px;background:none;color:#64748b;font-size:14px;cursor:pointer;margin-top:14px}
-/* ---------- 底部导航 ---------- */
 #tabbar{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:0 auto;display:flex;background:#fff;border-top:1px solid #e2e8f0;padding:6px 0 calc(6px + env(safe-area-inset-bottom));z-index:50}
-.tabbtn{flex:1;border:none;background:none;padding:4px 0;cursor:pointer;color:#94a3b8;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px;touch-action:manipulation}
+.tabbtn{flex:1;border:none;background:none;padding:4px 0;cursor:pointer;color:#94a3b8;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px;touch-action:manipulation}
 .tabbtn svg{width:22px;height:22px}
 .tabbtn.on{color:#0d9488}
-/* ---------- 训练详情 ---------- */
 #view-detail{position:fixed;inset:0;max-width:520px;margin:0 auto;background:#f0fdfa;z-index:100;overflow-y:auto;padding:0 16px 40px;display:none}
 #view-detail.active{display:block}
 .topbar{display:flex;align-items:center;gap:10px;padding:14px 0;position:sticky;top:0;background:#f0fdfa;z-index:5}
@@ -105,7 +118,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 .cyc{border:1px solid #99f6e4;background:#fff;color:#0f766e;border-radius:20px;padding:6px 16px;font-size:13px;cursor:pointer}
 .cyc.on{background:#0d9488;color:#fff;border-color:#0d9488}
 .ctrls{display:flex;gap:12px;margin-top:16px}
-#btnStart{flex:2;border:none;border-radius:14px;padding:14px 0;font-size:16px;font-weight:700;color:#fff;background:linear-gradient(90deg,#0d9488,#0ea5e9);cursor:pointer;letter-spacing:2px;touch-action:manipulation}
+#btnStart{flex:2;border:none;border-radius:14px;padding:14px 0;font-size:16px;font-weight:700;color:#fff;background:linear-gradient(90deg,#0d9488,#0ea5e9);cursor:pointer;letter-spacing:2px}
 #btnReset{flex:1;border:none;border-radius:14px;padding:14px 0;font-size:15px;color:#0f766e;background:#ccfbf1;cursor:pointer}
 .stepCard{background:#fff;border-radius:16px;padding:16px;margin-top:16px;box-shadow:0 2px 10px rgba(13,148,136,.08)}
 .stepCard h4{color:#0f766e;font-size:14px;margin-bottom:8px}
@@ -114,8 +127,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 .stepCard li.tip::before{content:"💡";position:absolute;left:0}
 .safeNote{margin-top:14px;font-size:11px;color:#94a3b8;text-align:center;line-height:1.7}
 .footer{margin-top:22px;text-align:center;font-size:11px;color:#94a3b8;line-height:1.8}
-#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#0f766e;color:#fff;border-radius:30px;padding:10px 22px;font-size:14px;z-index:300;display:none;box-shadow:0 4px 14px rgba(0,0,0,.2)}
-/* ---------- 动画引擎 ---------- */
+#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#0f766e;color:#fff;border-radius:30px;padding:10px 22px;font-size:14px;z-index:300;display:none;box-shadow:0 4px 14px rgba(0,0,0,.2);max-width:86%;text-align:center}
 @keyframes scaleVar{from{transform:scale(var(--fs,1))}to{transform:scale(var(--ts,1))}}
 @keyframes yVar{from{transform:translateY(var(--fy,0px))}to{transform:translateY(var(--ty,0px))}}
 @keyframes oVar{from{opacity:var(--fo,1)}to{opacity:var(--to,1)}}
@@ -152,14 +164,14 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 </head>
 <body>
 
-<!-- ============ 疾病选择页 (首次强制) ============ -->
+<div id="bootError">⚠️ 页面脚本未成功加载。<br>常见原因：① 复制代码不完整（请在电脑上重新完整复制，确保文件以 &lt;/html&gt; 结尾）；② 浏览器缓存了旧文件（请用无痕模式或加 ?v=62 打开）。</div>
+
 <section id="view-disease">
   <div class="pageTitle">选择您的疾病类型</div>
-  <div class="pageSub">我们将根据指南为您提供专属训练与评估方案</div>
+  <div class="pageSub">我们将根据指南为您提供专属训练、评估与宣教方案</div>
   <div id="diseaseList"></div>
 </section>
 
-<!-- ============ 首页 ============ -->
 <section id="view-home" class="view">
   <header class="hero">
     <div class="logoWrap">
@@ -182,18 +194,19 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
     <h3>⚡ 快速开始 (指南推荐)</h3>
     <div class="quick" id="quickStart"></div>
   </div>
+  <div class="emBanner" onclick="switchTab('edu')">🚨 出现紧急症状？点击查看警示 · 一键拨打120</div>
   <div class="card">
     <h3>⚠️ 安全须知</h3>
     <ul class="notice">
       <li>急性发作期（严重感染、大咯血、未控制心衰、气胸等）暂停训练；</li>
+      <li>呼吸训练为辅助康复手段，不能替代药物治疗；</li>
       <li>训练中出现头晕、心悸、胸闷、手脚发麻，立即停止休息；</li>
       <li>本应用带语音引导，建议开启手机媒体音量。</li>
     </ul>
   </div>
-  <p class="footer">制作：莆田学院附属医院 呼吸与危重症医学科三区<br>壶兰呼吸 v3.0</p>
+  <p class="footer">制作：莆田学院附属医院 呼吸与危重症医学科三区<br>壶兰呼吸 v6.2（指南校订版）</p>
 </section>
 
-<!-- ============ 训练列表 ============ -->
 <section id="view-train" class="view">
   <div class="pageTitle">训练方案</div>
   <div class="pageSub" id="trainSub">点击卡片进入动画与语音引导训练</div>
@@ -201,33 +214,48 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
   <p class="footer">制作：莆田学院附属医院 呼吸与危重症医学科三区</p>
 </section>
 
-<!-- ============ 评估页 ============ -->
 <section id="view-assess" class="view">
   <div class="pageTitle">症状评估</div>
   <div class="pageSub" id="assessSub">针对您的疾病定制的自评量表</div>
   <div id="assessBox"></div>
 </section>
 
-<!-- ============ 我的 (含统计) ============ -->
+<section id="view-edu" class="view">
+  <div class="pageTitle">健康宣教</div>
+  <div class="pageSub" id="eduSub">日常管理与紧急警示分区展示</div>
+  <div id="eduBox"></div>
+  <p class="footer">内容依据 GOLD / GINA / BTS / ATS·ERS / 中国相关指南与专家共识校订，具体请遵医嘱</p>
+</section>
+
 <section id="view-me" class="view">
   <div class="pageTitle">我的康复</div>
   <div class="bigStat">
     <div class="card"><b id="statTotalDays">0</b><span>累计打卡(天)</span></div>
     <div class="card"><b id="statTotalCount">0</b><span>总训练(次)</span></div>
   </div>
+  <div class="card"><h3>📅 本月打卡日历</h3><div class="calWrap" id="calGrid"></div></div>
+  <div class="card"><h3>📊 训练偏好分析</h3><div class="barChart" id="barChart"></div></div>
   <div class="card">
-    <h3>📅 本月打卡日历</h3>
-    <div class="calWrap" id="calGrid"></div>
+    <h3>🏥 制作单位</h3>
+    <p style="font-size:14px;line-height:1.8;color:#475569">莆田学院附属医院<br><b style="color:#0f766e">呼吸与危重症医学科三区</b></p>
   </div>
   <div class="card">
-    <h3>📊 训练偏好分析</h3>
-    <div class="barChart" id="barChart"></div>
+    <h3>🌿 关于「壶兰呼吸」</h3>
+    <p style="font-size:13px;line-height:1.8;color:#475569">「壶兰」取自莆田<b>壶公山</b>与<b>木兰溪</b>。LOGO 以壶公山叠翠、木兰溪蜿蜒为意象，山溪交织，如呼吸之吐纳往复。本应用面向慢阻肺、哮喘、支气管扩张等慢性气道疾病及胸腹部术后患者，提供语音与动画引导式呼吸康复训练，帮助改善肺功能、缓解呼吸困难。</p>
+  </div>
+  <div class="card">
+    <h3>📖 使用说明</h3>
+    <ul class="notice">
+      <li>每日 2–3 次，每次 10–15 分钟，循序渐进；</li>
+      <li>训练时保持肩颈放松，深吸慢呼，跟随语音引导；</li>
+      <li>完成训练后自动打卡，并生成统计图表与评估趋势；</li>
+      <li>交互设计参考 GitHub 开源呼吸训练项目（Breathly、ZenFlow、Calmness 等）。</li>
+    </ul>
   </div>
   <button class="settingBtn" onclick="changeDisease()">🔄 重新选择疾病类型</button>
-  <p class="footer">数据统计仅保存在本手机，保护您的隐私<br>莆田学院附属医院 呼吸与危重症医学科三区</p>
+  <p class="footer">数据统计仅保存在本手机，保护您的隐私<br>壶兰呼吸 v6.2<br>莆田学院附属医院 呼吸与危重症医学科三区</p>
 </section>
 
-<!-- ============ 训练详情 ============ -->
 <section id="view-detail">
   <div class="topbar">
     <button id="btnBack" onclick="closeDetail()">←</button>
@@ -258,319 +286,429 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
   <button class="tabbtn on" data-v="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8v10a1 1 0 01-1 1h-5v-7h-6v7H4a1 1 0 01-1-1z"/></svg>首页</button>
   <button class="tabbtn" data-v="train"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v6M12 10c-2 0-3.5-1.5-5.5-1.5C3.5 8.5 2.5 11.5 2.5 14.5S4 21 7 21c2 0 3-1 5-1s3 1 5 1c3 0 4.5-3.5 4.5-6.5S20.5 8.5 17.5 8.5C15.5 8.5 14 10 12 10z"/></svg>训练</button>
   <button class="tabbtn" data-v="assess"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>评估</button>
+  <button class="tabbtn" data-v="edu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>宣教</button>
   <button class="tabbtn" data-v="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>我的</button>
 </nav>
 <div id="toast"></div>
 
 <script>
-/* ================= 疾病与量表数据 ================= */
-const DISEASES = [
-  { id: 'copd', name: '慢性阻塞性肺疾病 (慢阻肺)', desc: '重点：改善通气，排出残气', icon: '🫁', color: '#0d9488', recTrain: ['fushi', 'suochun', 'cao'], assess: 'mMRC' },
-  { id: 'asthma', name: '支气管哮喘', desc: '重点：缓解气促，放松呼吸', icon: '🌬️', color: '#0ea5e9', recTrain: ['fushi', 'suochun'], assess: 'ACT' },
-  { id: 'bronchiectasis', name: '支气管扩张', desc: '重点：气道廓清，有效排痰', icon: '💧', color: '#f59e0b', recTrain: ['huff', 'fushi'], assess: 'sputum' },
-  { id: 'lungcancer', name: '肺癌 (围手术期/康复)', desc: '重点：肺复张，预防肺不张', icon: '🎗️', color: '#ef4444', recTrain: ['feiliangji', 'fushi', 'qiqiu'], assess: 'fatigue' },
-  { id: 'pneumoconiosis', name: '尘肺病', desc: '重点：代偿锻炼，全身呼吸操', icon: '🏭', color: '#64748b', recTrain: ['cao', 'fushi', 'suochun'], assess: 'mMRC' },
-  { id: 'ild', name: '间质性肺疾病', desc: '重点：减少氧耗，改善氧合', icon: '🕸️', color: '#8b5cf6', recTrain: ['fushi', 'suochun'], assess: 'borg' }
+window.addEventListener('error',function(e){
+  var el=document.getElementById('bootError');
+  if(el){el.style.display='block';el.innerHTML='⚠️ 脚本错误：'+e.message+'（第 '+e.lineno+' 行）<br>请在电脑上重新完整复制本文件，确保以 &lt;/html&gt; 结尾。';}
+},true);
+
+/* ================= 疾病数据 ================= */
+var DISEASES=[
+{id:'copd',name:'慢性阻塞性肺疾病 (慢阻肺)',desc:'重点：改善通气，排出残气',icon:'🫁',color:'#0d9488',recTrain:['fushi','suochun','cao'],assess:'mMRC'},
+{id:'asthma',name:'支气管哮喘',desc:'重点：规范抗炎，缓解气促',icon:'🌬️',color:'#0ea5e9',recTrain:['fushi','suochun'],assess:'ACT'},
+{id:'bronchiectasis',name:'支气管扩张',desc:'重点：气道廓清，有效排痰',icon:'💧',color:'#f59e0b',recTrain:['huff','fushi'],assess:'sputum'},
+{id:'lungcancer',name:'肺癌 (围手术期/康复)',desc:'重点：肺复张，预防并发症',icon:'🎗️',color:'#ef4444',recTrain:['feiliangji','fushi','qiqiu'],assess:'fatigue'},
+{id:'pneumoconiosis',name:'尘肺病',desc:'重点：代偿锻炼，防治并发症',icon:'🏭',color:'#64748b',recTrain:['cao','fushi','suochun'],assess:'mMRC'},
+{id:'ild',name:'间质性肺疾病',desc:'重点：规范抗纤维化，减少氧耗',icon:'🕸️',color:'#8b5cf6',recTrain:['fushi','suochun'],assess:'borg'},
+{id:'pneumothorax',name:'气胸 (恢复期)',desc:'注意：预防复发，活动遵医嘱',icon:'⚡',color:'#06b6d4',recTrain:[],assess:'borg',noTrain:true,noTrainNote:'气胸急性期及恢复期内，活动强度须严格遵医嘱；为避免胸腔压力波动诱发复发，本应用呼吸训练暂不开放（避免用力屏气、吹气球、潜水等）。请参阅「健康宣教」与「紧急警示」，训练事宜咨询主管医生。'},
+{id:'effusion',name:'胸腔积液',desc:'重点：病因治疗，促进肺复张',icon:'🌊',color:'#3b82f6',recTrain:['fushi','suochun','cao'],assess:'mMRC'},
+{id:'tb',name:'肺结核',desc:'重点：规范化疗，感染控制',icon:'🦠',color:'#f97316',recTrain:['fushi','suochun','cao'],assess:'tb'},
+{id:'corpulmonale',name:'慢性肺源性心脏病',desc:'重点：氧疗管理，控制心衰',icon:'❤️',color:'#e11d48',recTrain:['suochun','fushi'],assess:'mMRC'},
+{id:'osa',name:'睡眠呼吸暂停',desc:'重点：减重，CPAP 规范治疗',icon:'😴',color:'#6366f1',recTrain:['cao','fushi','suochun'],assess:'ess'},
+{id:'quit',name:'戒烟支持',desc:'重点：科学戒烟，药物+行为干预',icon:'🚭',color:'#475569',recTrain:['cao','fushi','suochun'],assess:'ftnd'}
 ];
 
-const ASSESSMENTS = {
-  mMRC: {
-    name: 'mMRC 呼吸困难问卷',
-    desc: '评估日常活动中的呼吸困难程度（慢阻肺/尘肺金标准）',
-    type: 'single',
-    questions: [
-      { q: '请选择最符合您目前状态的选项：', opts: [
-        { text: '0级：仅在剧烈活动时感到呼吸困难', score: 0 },
-        { text: '1级：在平地快步行走或步行爬小坡时出现气短', score: 1 },
-        { text: '2级：由于气短，平地行走时比同龄人慢，或需要停下来喘气', score: 2 },
-        { text: '3级：在平地行走约100米或数分钟后需要停下来喘气', score: 3 },
-        { text: '4级：因严重呼吸困难不能离开家，或穿衣脱衣时即气短', score: 4 }
-      ]}
-    ],
-    result: (score) => {
-      if(score === 0) return { level: '0级', text: '无明显呼吸困难，继续保持日常锻炼。', color: '#10b981' };
-      if(score === 1) return { level: '1级', text: '轻度呼吸困难，建议坚持缩唇和腹式呼吸。', color: '#0ea5e9' };
-      if(score === 2) return { level: '2级', text: '中度呼吸困难，日常活动受限，请规律进行呼吸康复。', color: '#f59e0b' };
-      return { level: score + '级', text: '重度呼吸困难，建议及时就医并调整康复方案。', color: '#ef4444' };
-    }
-  },
-  ACT: {
-    name: '哮喘控制测试 (ACT)',
-    desc: '评估过去4周内哮喘的控制情况（总分5-25分）',
-    type: 'sum',
-    questions: [
-      { q: '1. 哮喘对您日常活动的限制程度？', opts: [
-        {text:'完全限制(1)',score:1},{text:'很多限制(2)',score:2},{text:'有些限制(3)',score:3},{text:'很少限制(4)',score:4},{text:'毫无限制(5)',score:5}
-      ]},
-      { q: '2. 您呼吸困难的频率？', opts: [
-        {text:'每天>3次(1)',score:1},{text:'每天1-3次(2)',score:2},{text:'每周1-2次(3)',score:3},{text:'每月1-2次(4)',score:4},{text:'完全没有(5)',score:5}
-      ]},
-      { q: '3. 夜间憋醒或哮喘症状频率？', opts: [
-        {text:'每周≥4晚(1)',score:1},{text:'每周2-3晚(2)',score:2},{text:'每周1晚(3)',score:3},{text:'每月1-2晚(4)',score:4},{text:'完全没有(5)',score:5}
-      ]},
-      { q: '4. 过去4周使用急救药物(如沙丁胺醇)的频率？', opts: [
-        {text:'每天≥3次(1)',score:1},{text:'每天1-2次(2)',score:2},{text:'每周2-3次(3)',score:3},{text:'每周≤1次(4)',score:4},{text:'完全没用(5)',score:5}
-      ]},
-      { q: '5. 您如何评价过去4周您的哮喘控制情况？', opts: [
-        {text:'完全没控制(1)',score:1},{text:'控制较差(2)',score:2},{text:'控制一般(3)',score:3},{text:'控制良好(4)',score:4},{text:'完全控制(5)',score:5}
-      ]}
-    ],
-    result: (score) => {
-      if(score >= 20) return { level: score+'分', text: '哮喘控制良好，请继续维持当前治疗和呼吸训练。', color: '#10b981' };
-      if(score >= 16) return { level: score+'分', text: '哮喘控制不佳，建议复诊调整用药，加强呼吸操练习。', color: '#f59e0b' };
-      return { level: score+'分', text: '哮喘未控制，请尽快就医！急性期避免剧烈运动。', color: '#ef4444' };
-    }
-  },
-  sputum: {
-    name: '咳痰简易评估',
-    desc: '评估每日痰量与排痰难度（支扩核心指标）',
-    type: 'sum',
-    questions: [
-      { q: '1. 每日痰量大约是多少？', opts: [
-        {text:'<10ml(1分)',score:1},{text:'10-50ml(2分)',score:2},{text:'50-100ml(3分)',score:3},{text:'>100ml(4分)',score:4}
-      ]},
-      { q: '2. 痰液性状与咳出难度？', opts: [
-        {text:'稀薄易咳(1分)',score:1},{text:'粘稠需用力(2分)',score:2},{text:'极粘稠难咳(3分)',score:3},{text:'伴血丝/脓性(4分)',score:4}
-      ]}
-    ],
-    result: (score) => {
-      if(score <= 3) return { level: score+'分', text: '痰量少且易咳，坚持腹式呼吸即可。', color: '#10b981' };
-      if(score <= 5) return { level: score+'分', text: '痰液较多或粘稠，建议每日增加“哈气排痰”训练。', color: '#f59e0b' };
-      return { level: score+'分', text: '痰量极大或排痰困难，请配合体位引流并及时就医。', color: '#ef4444' };
-    }
-  },
-  fatigue: {
-    name: '癌性疲劳简易评估',
-    desc: '评估术后或治疗后的疲劳程度（指导运动强度）',
-    type: 'single',
-    questions: [
-      { q: '过去一周您的平均疲劳程度？', opts: [
-        {text:'无疲劳，精力充沛(0分)',score:0},
-        {text:'轻度疲劳，不影响日常活动(3分)',score:3},
-        {text:'中度疲劳，活动后明显乏力(6分)',score:6},
-        {text:'重度疲劳，需长期卧床休息(10分)',score:10}
-      ]}
-    ],
-    result: (score) => {
-      if(score <= 3) return { level: '轻度', text: '状态良好，可进行呼吸操及吹气球等肺复张训练。', color: '#10b981' };
-      if(score <= 6) return { level: '中度', text: '易疲劳，建议以坐位腹式呼吸和缩唇呼吸为主。', color: '#f59e0b' };
-      return { level: '重度', text: '极度疲劳，请以卧床/半卧位休息和浅慢呼吸为主。', color: '#ef4444' };
-    }
-  },
-  borg: {
-    name: 'Borg 呼吸困难评分',
-    desc: '评估当下的呼吸困难主观感受（间质性肺病常用）',
-    type: 'single',
-    questions: [
-      { q: '您现在的呼吸困难程度是？', opts: [
-        {text:'0 无',score:0},{text:'0.5 极轻',score:0.5},{text:'1 轻度',score:1},{text:'2 轻度',score:2},
-        {text:'3 中度',score:3},{text:'4 中度偏重',score:4},{text:'5 重度',score:5},{text:'7 极重',score:7},{text:'10 极重度',score:10}
-      ]}
-    ],
-    result: (score) => {
-      if(score <= 2) return { level: score+'分', text: '呼吸困难较轻，可适度进行低强度呼吸操。', color: '#10b981' };
-      if(score <= 4) return { level: score+'分', text: '中度气促，请专注缩唇呼吸，减少氧耗。', color: '#f59e0b' };
-      return { level: score+'分', text: '重度气促，请立即吸氧并休息，暂停运动训练。', color: '#ef4444' };
-    }
-  }
+/* ================= 评估量表 ================= */
+var ASSESSMENTS={
+mMRC:{name:'mMRC 呼吸困难问卷',desc:'评估日常活动中的呼吸困难程度',range:[0,4],goodDir:'down',
+ questions:[{q:'请选择最符合您目前状态的选项：',opts:[
+ {text:'0级：仅在剧烈活动时感到呼吸困难',score:0},{text:'1级：平地快步行走或爬小坡时气短',score:1},
+ {text:'2级：比同龄人走得慢，或需停下喘气',score:2},{text:'3级：平地走约100米或数分钟需停下喘气',score:3},
+ {text:'4级：不能离家，或穿衣脱衣即气短',score:4}]}],
+ result:function(s){if(s===0)return{level:'0级',text:'无明显呼吸困难，继续保持日常锻炼。',color:'#10b981'};if(s===1)return{level:'1级',text:'轻度呼吸困难，建议坚持缩唇和腹式呼吸。',color:'#0ea5e9'};if(s===2)return{level:'2级',text:'中度呼吸困难，日常活动受限，请规律进行呼吸康复。',color:'#f59e0b'};return{level:s+'级',text:'重度呼吸困难，建议及时就医并调整康复方案。',color:'#ef4444'};}},
+ACT:{name:'哮喘控制测试 (ACT)',desc:'评估过去4周哮喘控制情况（5–25分，越高越好）',range:[5,25],goodDir:'up',
+ questions:[
+ {q:'1. 哮喘对您日常活动的限制？',opts:[{text:'完全限制(1)',score:1},{text:'很多限制(2)',score:2},{text:'有些限制(3)',score:3},{text:'很少限制(4)',score:4},{text:'毫无限制(5)',score:5}]},
+ {q:'2. 呼吸困难频率？',opts:[{text:'每天>3次(1)',score:1},{text:'每天1-3次(2)',score:2},{text:'每周1-2次(3)',score:3},{text:'每月1-2次(4)',score:4},{text:'完全没有(5)',score:5}]},
+ {q:'3. 夜间憋醒频率？',opts:[{text:'每周≥4晚(1)',score:1},{text:'每周2-3晚(2)',score:2},{text:'每周1晚(3)',score:3},{text:'每月1-2晚(4)',score:4},{text:'完全没有(5)',score:5}]},
+ {q:'4. 使用急救药物频率？',opts:[{text:'每天≥3次(1)',score:1},{text:'每天1-2次(2)',score:2},{text:'每周2-3次(3)',score:3},{text:'每周≤1次(4)',score:4},{text:'完全没用(5)',score:5}]},
+ {q:'5. 自我评价哮喘控制？',opts:[{text:'完全没控制(1)',score:1},{text:'控制较差(2)',score:2},{text:'控制一般(3)',score:3},{text:'控制良好(4)',score:4},{text:'完全控制(5)',score:5}]}],
+ result:function(s){if(s>=20)return{level:s+'分',text:'哮喘控制良好，请继续维持当前治疗和呼吸训练。',color:'#10b981'};if(s>=16)return{level:s+'分',text:'哮喘控制不佳，建议复诊调整用药。',color:'#f59e0b'};return{level:s+'分',text:'哮喘未控制，请尽快就医！急性期避免剧烈运动。',color:'#ef4444'};}},
+sputum:{name:'咳痰简易评估',desc:'评估每日痰量与排痰难度',range:[2,8],goodDir:'down',
+ questions:[
+ {q:'1. 每日痰量？',opts:[{text:'小于10ml(1)',score:1},{text:'10-50ml(2)',score:2},{text:'50-100ml(3)',score:3},{text:'大于100ml(4)',score:4}]},
+ {q:'2. 痰液性状与咳出难度？',opts:[{text:'稀薄易咳(1)',score:1},{text:'粘稠需用力(2)',score:2},{text:'极粘稠难咳(3)',score:3},{text:'伴血丝/脓性(4)',score:4}]}],
+ result:function(s){if(s<=3)return{level:s+'分',text:'痰量少且易咳，坚持腹式呼吸即可。',color:'#10b981'};if(s<=5)return{level:s+'分',text:'痰液较多或粘稠，建议每日增加哈气排痰训练。',color:'#f59e0b'};return{level:s+'分',text:'痰量极大或排痰困难，请配合体位引流并及时就医。',color:'#ef4444'};}},
+fatigue:{name:'癌性疲劳简易评估',desc:'评估疲劳程度，指导运动强度',range:[0,10],goodDir:'down',
+ questions:[{q:'过去一周您的平均疲劳程度？',opts:[{text:'无疲劳，精力充沛(0)',score:0},{text:'轻度疲劳，不影响日常(3)',score:3},{text:'中度疲劳，活动后明显乏力(6)',score:6},{text:'重度疲劳，需长期卧床(10)',score:10}]}],
+ result:function(s){if(s<=3)return{level:'轻度',text:'状态良好，可进行呼吸操及吹气球等肺复张训练。',color:'#10b981'};if(s<=6)return{level:'中度',text:'易疲劳，建议以坐位腹式呼吸和缩唇呼吸为主。',color:'#f59e0b'};return{level:'重度',text:'极度疲劳，请以卧床休息和浅慢呼吸为主。',color:'#ef4444'};}},
+borg:{name:'Borg 呼吸困难评分',desc:'评估当下的呼吸困难主观感受',range:[0,10],goodDir:'down',
+ questions:[{q:'您现在的呼吸困难程度？',opts:[{text:'0 无',score:0},{text:'0.5 极轻',score:0.5},{text:'1 轻度',score:1},{text:'2 轻度',score:2},{text:'3 中度',score:3},{text:'4 中度偏重',score:4},{text:'5 重度',score:5},{text:'7 极重',score:7},{text:'10 极重度',score:10}]}],
+ result:function(s){if(s<=2)return{level:s+'分',text:'呼吸困难较轻，可适度进行低强度呼吸操。',color:'#10b981'};if(s<=4)return{level:s+'分',text:'中度气促，请专注缩唇呼吸，减少氧耗。',color:'#f59e0b'};return{level:s+'分',text:'重度气促，请立即吸氧并休息，暂停运动训练。',color:'#ef4444'};}},
+tb:{name:'结核活动症状自评',desc:'监测咳嗽、咯血、低热盗汗等活动性症状',range:[0,7],goodDir:'down',
+ questions:[
+ {q:'1. 咳嗽咳痰是否持续2周以上或加重？',opts:[{text:'否(0)',score:0},{text:'是(2)',score:2}]},
+ {q:'2. 是否出现咯血或痰中带血？',opts:[{text:'否(0)',score:0},{text:'是(3)',score:3}]},
+ {q:'3. 是否午后低热、夜间盗汗、体重下降？',opts:[{text:'否(0)',score:0},{text:'是(2)',score:2}]}],
+ result:function(s){if(s===0)return{level:'0分',text:'无明显活动性症状，请继续规范服药、定期复查。',color:'#10b981'};if(s<=3)return{level:s+'分',text:'存在部分症状，请尽快门诊复查痰检/影像。',color:'#f59e0b'};return{level:s+'分',text:'警惕结核活动或并发症，请立即就医并做好防护。',color:'#ef4444'};}},
+ess:{name:'Epworth 嗜睡量表 (ESS)',desc:'评估白天嗜睡程度（0–24分）',range:[0,24],goodDir:'down',
+ questions:[
+ {q:'1. 坐着阅读时打瞌睡的可能？',opts:[{text:'不会(0)',score:0},{text:'很少(1)',score:1},{text:'有时(2)',score:2},{text:'经常(3)',score:3}]},
+ {q:'2. 看电视时？',opts:[{text:'不会(0)',score:0},{text:'很少(1)',score:1},{text:'有时(2)',score:2},{text:'经常(3)',score:3}]},
+ {q:'3. 在公共场所静坐时？',opts:[{text:'不会(0)',score:0},{text:'很少(1)',score:1},{text:'有时(2)',score:2},{text:'经常(3)',score:3}]},
+ {q:'4. 乘车超过1小时？',opts:[{text:'不会(0)',score:0},{text:'很少(1)',score:1},{text:'有时(2)',score:2},{text:'经常(3)',score:3}]},
+ {q:'5. 下午躺下休息时？',opts:[{text:'不会(0)',score:0},{text:'很少(1)',score:1},{text:'有时(2)',score:2},{text:'经常(3)',score:3}]},
+ {q:'6. 坐着与人交谈时？',opts:[{text:'不会(0)',score:0},{text:'很少(1)',score:1},{text:'有时(2)',score:2},{text:'经常(3)',score:3}]},
+ {q:'7. 午饭后安静坐着（未饮酒）？',opts:[{text:'不会(0)',score:0},{text:'很少(1)',score:1},{text:'有时(2)',score:2},{text:'经常(3)',score:3}]},
+ {q:'8. 堵车停车等候时？',opts:[{text:'不会(0)',score:0},{text:'很少(1)',score:1},{text:'有时(2)',score:2},{text:'经常(3)',score:3}]}],
+ result:function(s){if(s<=5)return{level:s+'分',text:'白天嗜睡正常范围，继续保持健康作息。',color:'#10b981'};if(s<=10)return{level:s+'分',text:'轻度嗜睡，建议减重、侧卧睡眠并复查。',color:'#0ea5e9'};if(s<=14)return{level:s+'分',text:'中度嗜睡，建议行睡眠监测（PSG）评估。',color:'#f59e0b'};return{level:s+'分',text:'重度嗜睡，请尽快就诊睡眠中心，评估CPAP治疗。',color:'#ef4444'};}},
+ftnd:{name:'尼古丁依赖量表 (FTND)',desc:'评估烟草依赖程度（0–10分）',range:[0,10],goodDir:'down',
+ questions:[
+ {q:'1. 晨起后多久吸第一支烟？',opts:[{text:'大于60分钟(0)',score:0},{text:'31-60分钟(1)',score:1},{text:'6-30分钟(2)',score:2},{text:'5分钟内(3)',score:3}]},
+ {q:'2. 在禁烟场所难以忍耐吸烟？',opts:[{text:'否(0)',score:0},{text:'是(1)',score:1}]},
+ {q:'3. 哪一支烟最难放弃？',opts:[{text:'其他(0)',score:0},{text:'晨起第一支(1)',score:1}]},
+ {q:'4. 每天吸多少支？',opts:[{text:'10支以内(0)',score:0},{text:'11-20支(1)',score:1},{text:'21-30支(2)',score:2},{text:'30支以上(3)',score:3}]},
+ {q:'5. 晨起后几小时吸烟更频繁？',opts:[{text:'否(0)',score:0},{text:'是(1)',score:1}]},
+ {q:'6. 患病卧床时仍吸烟？',opts:[{text:'否(0)',score:0},{text:'是(1)',score:1}]}],
+ result:function(s){if(s<=3)return{level:s+'分',text:'低依赖：意志力+行为替代（如本应用深呼吸训练）即可尝试戒断。',color:'#10b981'};if(s<=6)return{level:s+'分',text:'中度依赖：建议尼古丁替代治疗（贴片/咀嚼胶）提高成功率。',color:'#f59e0b'};return{level:s+'分',text:'高度依赖：建议到戒烟门诊，联合药物治疗+行为干预。',color:'#ef4444'};}}
 };
 
-/* ================= 训练数据 (含语音提示) ================= */
-const TRAININGS=[
-{id:'fushi',name:'腹式呼吸',icon:'🧘',color:'#0d9488',desc:'增强膈肌力量，增加肺活量，减少呼吸功耗',tags:['核心训练'],ratio:'吸:呼 ≈ 1:2',
+/* ================= 训练数据（指南校订） ================= */
+var TRAININGS=[
+{id:'fushi',name:'腹式呼吸',icon:'🧘',color:'#0d9488',desc:'增强膈肌力量，增加肺活量',tags:['核心训练'],ratio:'吸:呼 ≈ 1:2',
  phases:[{k:'in',name:'吸气',hint:'用鼻缓慢吸气 · 腹部鼓起',dur:4,voice:'吸气，腹部鼓起'},{k:'out',name:'呼气',hint:'缩唇缓慢呼气 · 腹部凹陷',dur:8,voice:'缓慢呼气，腹部收缩'}],
- steps:['取舒适坐位或半卧位，全身放松。','一手放于胸前，一手放于腹部。','用鼻缓慢吸气，感受腹部鼓起。','用口缓慢呼气，腹部自然凹陷。'],tips:['每次 10–15 分钟，每日 2–3 次。']},
-{id:'suochun',name:'缩唇呼吸',icon:'😙',color:'#0ea5e9',desc:'防止小气道过早陷闭，促进肺内残气排出',tags:['缓解气促'],ratio:'吸:呼 = 1:2~1:3',
+ steps:['取舒适坐位或半卧位，全身放松。','一手放于胸前，一手放于腹部。','用鼻缓慢吸气，感受腹部鼓起。','用口缓慢呼气，腹部自然凹陷。'],tips:['每次 10–15 分钟，每日 2–3 次。','呼吸训练为辅助手段，不能替代药物治疗。']},
+{id:'suochun',name:'缩唇呼吸',icon:'😙',color:'#0ea5e9',desc:'防止小气道陷闭，排出残气',tags:['缓解气促'],ratio:'吸:呼 = 1:2~1:3',
  phases:[{k:'in',name:'吸气',hint:'闭口用鼻吸气 2–3 秒',dur:3,voice:'吸气'},{k:'out',name:'呼气',hint:'缩唇如吹口哨 · 缓慢均匀呼气',dur:6,voice:'缩唇，缓慢呼气'}],
- steps:['放松肩颈，用鼻吸气 2–3 秒。','嘴唇缩成“吹口哨”状。','缓慢均匀呼气 4–6 秒。'],tips:['活动后气促时立即使用，可快速缓解。']},
-{id:'qiqiu',name:'吹气球 / 吹水泡',icon:'🎈',color:'#f59e0b',desc:'简易阻力呼气训练，增加肺活量',tags:['肺复张'],ratio:'吸3秒 · 吹5秒',
+ steps:['放松肩颈，用鼻吸气 2–3 秒。','嘴唇缩成吹口哨状。','缓慢均匀呼气 4–6 秒。'],tips:['活动后气促时立即使用。','不能替代吸入药物，哮喘急性发作按行动计划用药。']},
+{id:'qiqiu',name:'吹气球 / 吹水泡',icon:'🎈',color:'#f59e0b',desc:'阻力呼气训练，促进肺复张',tags:['肺复张'],ratio:'吸3秒 · 吹5秒',
  phases:[{k:'in',name:'吸气',hint:'深吸一口气',dur:3,voice:'深吸气'},{k:'out',name:'吹气',hint:'口含气球口 · 均匀缓慢吹气',dur:5,voice:'缓慢吹气'}],
- steps:['深吸气后，口含气球口缓慢吹气约 5 秒。','吹气时感受腹部内收、均匀用力。'],tips:['避免过度用力导致头晕。']},
-{id:'feiliangji',name:'激励式肺量计',icon:'🎚️',color:'#14b8a6',desc:'鼓励深吸气，预防肺不张，常用于术后康复',tags:['术后康复'],ratio:'吸4 · 屏3 · 呼3',
- phases:[{k:'in',name:'深吸气',hint:'含住咬嘴 · 慢吸气使小球升至目标',dur:4,voice:'深吸气'},{k:'hold',name:'屏气',hint:'保持小球悬浮 2–3 秒',dur:3,voice:'屏住呼吸'},{k:'out',name:'呼气',hint:'移开咬嘴 · 缓慢呼气',dur:3,voice:'缓慢呼气'}],
- steps:['含住咬嘴，缓慢深吸气使小球升起。','屏气 2–3 秒，保持小球悬浮。','移开咬嘴缓慢呼气。'],tips:['常用于胸腹部术后。']},
-{id:'huff',name:'有效咳嗽 / 哈气',icon:'🗣️',color:'#ef4444',desc:'气道廓清技术，松动并排出深部痰液',tags:['排痰'],ratio:'吸3 · 屏2 · 哈3',
- phases:[{k:'in',name:'深吸气',hint:'坐位稍前倾 · 缓慢深吸气',dur:3,voice:'深吸气'},{k:'hold',name:'屏气',hint:'屏气 2–3 秒',dur:2,voice:'屏住'},{k:'out',name:'哈气',hint:'张口“哈”气 2–3 次',dur:3,voice:'哈气排痰'}],
- steps:['缓慢深吸气后屏气 2–3 秒。','张口做“哈气”动作 2–3 次。','再短促有力咳嗽将痰咳出。'],tips:['避免连续剧烈咳嗽。']},
-{id:'cao',name:'呼吸操',icon:'🤸',color:'#8b5cf6',desc:'肢体动作配合呼吸，增加胸廓活动度',tags:['全身训练'],ratio:'举臂吸4 · 放下呼6',
- phases:[{k:'in',name:'吸气',hint:'双臂缓慢上举过头 · 用鼻吸气',dur:4,voice:'举臂，吸气'},{k:'out',name:'呼气',hint:'双臂缓慢放下 · 缩唇呼气',dur:6,voice:'放下，呼气'}],
- steps:['双臂缓慢上举过头，同时用鼻吸气。','双臂缓慢放下，同时缩唇呼气。'],tips:['动作舒缓，与呼吸节奏配合。']}
+ steps:['深吸气后，口含气球口缓慢吹气约 5 秒。','吹气时感受腹部内收。'],tips:['气胸、咯血期、不明原因胸痛禁用；潜水者慎用。','出现头晕、胸痛立即停止并告知医生。']},
+{id:'feiliangji',name:'激励式肺量计',icon:'🎚️',color:'#14b8a6',desc:'鼓励深吸气，预防肺不张',tags:['术后康复'],ratio:'吸4 · 屏3 · 呼3',
+ phases:[{k:'in',name:'深吸气',hint:'含住咬嘴 · 慢吸气使小球升起',dur:4,voice:'深吸气'},{k:'hold',name:'屏气',hint:'保持小球悬浮 2–3 秒',dur:3,voice:'屏住呼吸'},{k:'out',name:'呼气',hint:'移开咬嘴 · 缓慢呼气',dur:3,voice:'缓慢呼气'}],
+ steps:['含住咬嘴，缓慢深吸气使小球升起。','屏气 2–3 秒。','移开咬嘴缓慢呼气。'],tips:['是否使用及目标量遵医嘱；胸痛、眩晕即停。']},
+{id:'huff',name:'有效咳嗽 / 哈气',icon:'🗣️',color:'#ef4444',desc:'气道廓清，排出深部痰液',tags:['排痰'],ratio:'吸3 · 屏2 · 哈3',
+ phases:[{k:'in',name:'深吸气',hint:'坐位稍前倾 · 缓慢深吸气',dur:3,voice:'深吸气'},{k:'hold',name:'屏气',hint:'屏气 2–3 秒',dur:2,voice:'屏住'},{k:'out',name:'哈气',hint:'张口哈气 2–3 次',dur:3,voice:'哈气排痰'}],
+ steps:['缓慢深吸气后屏气 2–3 秒。','张口哈气 2–3 次。','短促有力咳嗽将痰咳出。'],tips:['咯血期暂停，先就医；避免连续剧烈咳嗽。']},
+{id:'cao',name:'呼吸操',icon:'🤸',color:'#8b5cf6',desc:'肢体配合呼吸，增加胸廓活动度',tags:['全身训练'],ratio:'举臂吸4 · 放下呼6',
+ phases:[{k:'in',name:'吸气',hint:'双臂缓慢上举 · 用鼻吸气',dur:4,voice:'举臂，吸气'},{k:'out',name:'呼气',hint:'双臂缓慢放下 · 缩唇呼气',dur:6,voice:'放下，呼气'}],
+ steps:['双臂缓慢上举过头，同时吸气。','双臂缓慢放下，同时缩唇呼气。'],tips:['动作舒缓，以不疲劳为度；急性加重期以休息为主。']}
 ];
 
-/* ================= 动画场景 SVG ================= */
-const SCENES={
-fushi:`<svg viewBox="0 0 220 160"><line x1="30" y1="140" x2="190" y2="140" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round"/><circle cx="110" cy="30" r="16" fill="#ccfbf1" stroke="#0f766e" stroke-width="3"/><path d="M110 46 C 86 52 82 80 85 112 L135 112 C138 80 134 52 110 46 Z" fill="#f0fdfa" stroke="#0f766e" stroke-width="3"/><circle class="belly" style="transform-origin:110px 96px" cx="110" cy="96" r="19" fill="#5eead4" stroke="#0d9488" stroke-width="3"/><text x="150" y="100" font-size="11" fill="#0d9488">腹部起伏</text></svg>`,
-suochun:`<svg viewBox="0 0 220 160"><circle cx="80" cy="70" r="34" fill="#e0f2fe" stroke="#0369a1" stroke-width="3"/><path d="M112 62 l12 6 l-12 6" fill="#e0f2fe" stroke="#0369a1" stroke-width="3" stroke-linejoin="round"/><circle cx="116" cy="86" r="6" fill="none" stroke="#0369a1" stroke-width="3"/><g class="airin" stroke="#14b8a6" stroke-width="3" fill="none" stroke-linecap="round"><path d="M146 58 h-16"/></g><g class="airout" stroke="#0ea5e9" stroke-width="3" fill="none" stroke-linecap="round"><path d="M130 86 q8 -5 16 0 t16 0"/></g></svg>`,
-qiqiu:`<svg viewBox="0 0 220 160"><circle cx="52" cy="70" r="16" fill="#fef3c7" stroke="#b45309" stroke-width="3"/><g class="balloon" style="transform-origin:136px 70px"><circle cx="136" cy="70" r="26" fill="#fda4af" stroke="#e11d48" stroke-width="3"/></g></svg>`,
-feiliangji:`<svg viewBox="0 0 220 160"><rect x="80" y="24" width="84" height="112" rx="12" fill="#f0fdfa" stroke="#0f766e" stroke-width="3"/><circle class="lift" cx="122" cy="120" r="9" fill="#0d9488"/></svg>`,
-huff:`<svg viewBox="0 0 220 160"><g class="lungs" style="transform-origin:110px 62px"><path d="M98 42 C 76 50 70 80 77 100 Z" fill="#fecdd3" stroke="#e11d48" stroke-width="3"/><path d="M122 42 C 144 50 150 80 143 100 Z" fill="#fecdd3" stroke="#e11d48" stroke-width="3"/></g><g class="sput" fill="#f59e0b"><circle cx="110" cy="64" r="4"/></g></svg>`,
-cao:`<svg viewBox="0 0 220 160"><circle cx="110" cy="34" r="13" fill="#ede9fe" stroke="#6d28d9" stroke-width="3"/><line x1="110" y1="47" x2="110" y2="94" stroke="#6d28d9" stroke-width="4" stroke-linecap="round"/><g class="armsDown" stroke="#6d28d9" stroke-width="4" stroke-linecap="round"><line x1="110" y1="56" x2="82" y2="84"/><line x1="110" y1="56" x2="138" y2="84"/></g><g class="armsUp" stroke="#6d28d9" stroke-width="4" stroke-linecap="round"><line x1="110" y1="56" x2="80" y2="28"/><line x1="110" y1="56" x2="140" y2="28"/></g></svg>`
+/* ================= 动画场景 ================= */
+var SCENES={
+fushi:'<svg viewBox="0 0 220 160"><line x1="30" y1="140" x2="190" y2="140" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round"/><circle cx="110" cy="30" r="16" fill="#ccfbf1" stroke="#0f766e" stroke-width="3"/><path d="M110 46 C 86 52 82 80 85 112 L135 112 C138 80 134 52 110 46 Z" fill="#f0fdfa" stroke="#0f766e" stroke-width="3"/><circle class="belly" style="transform-origin:110px 96px" cx="110" cy="96" r="19" fill="#5eead4" stroke="#0d9488" stroke-width="3"/><text x="150" y="100" font-size="11" fill="#0d9488">腹部起伏</text></svg>',
+suochun:'<svg viewBox="0 0 220 160"><circle cx="80" cy="70" r="34" fill="#e0f2fe" stroke="#0369a1" stroke-width="3"/><path d="M112 62 l12 6 l-12 6" fill="#e0f2fe" stroke="#0369a1" stroke-width="3" stroke-linejoin="round"/><circle cx="116" cy="86" r="6" fill="none" stroke="#0369a1" stroke-width="3"/><g class="airin" stroke="#14b8a6" stroke-width="3" fill="none" stroke-linecap="round"><path d="M146 58 h-16"/></g><g class="airout" stroke="#0ea5e9" stroke-width="3" fill="none" stroke-linecap="round"><path d="M130 86 q8 -5 16 0 t16 0"/></g></svg>',
+qiqiu:'<svg viewBox="0 0 220 160"><circle cx="52" cy="70" r="16" fill="#fef3c7" stroke="#b45309" stroke-width="3"/><g class="balloon" style="transform-origin:136px 70px"><circle cx="136" cy="70" r="26" fill="#fda4af" stroke="#e11d48" stroke-width="3"/></g></svg>',
+feiliangji:'<svg viewBox="0 0 220 160"><rect x="80" y="24" width="84" height="112" rx="12" fill="#f0fdfa" stroke="#0f766e" stroke-width="3"/><circle class="lift" cx="122" cy="120" r="9" fill="#0d9488"/></svg>',
+huff:'<svg viewBox="0 0 220 160"><g class="lungs" style="transform-origin:110px 62px"><path d="M98 42 C 76 50 70 80 77 100 Z" fill="#fecdd3" stroke="#e11d48" stroke-width="3"/><path d="M122 42 C 144 50 150 80 143 100 Z" fill="#fecdd3" stroke="#e11d48" stroke-width="3"/></g><g class="sput" fill="#f59e0b"><circle cx="110" cy="64" r="4"/></g></svg>',
+cao:'<svg viewBox="0 0 220 160"><circle cx="110" cy="34" r="13" fill="#ede9fe" stroke="#6d28d9" stroke-width="3"/><line x1="110" y1="47" x2="110" y2="94" stroke="#6d28d9" stroke-width="4" stroke-linecap="round"/><g class="armsDown" stroke="#6d28d9" stroke-width="4" stroke-linecap="round"><line x1="110" y1="56" x2="82" y2="84"/><line x1="110" y1="56" x2="138" y2="84"/></g><g class="armsUp" stroke="#6d28d9" stroke-width="4" stroke-linecap="round"><line x1="110" y1="56" x2="80" y2="28"/><line x1="110" y1="56" x2="140" y2="28"/></g></svg>'
+};
+
+/* ================= 健康宣教（指南校订版） ================= */
+var EDUCATION={
+copd:{src:'GOLD 2025 / 中国慢阻肺诊治指南（2024年修订版）',daily:[
+{icon:'💊',title:'规范用药',items:['遵医嘱长期规律吸入治疗（LAMA/LABA/ICS 等联合方案），即使无症状也不自行停药或减量。','每次复诊向医护演示吸入装置技术；含 ICS 药物用后漱口。','外出随身携带药物；家中备指脉氧仪。']},
+{icon:'💉',title:'疫苗接种（GOLD 推荐）',items:['每年 1 次流感疫苗；肺炎球菌疫苗（每 5 年 1 次）。','新冠疫苗按政策接种；≥60 岁建议 RSV 疫苗；≥50 岁可接种带状疱疹疫苗。']},
+{icon:'🏃',title:'肺康复（指南核心非药物干预）',items:['建议参加规范肺康复项目（运动训练 8–12 周以上获益明确）。','每日腹式+缩唇呼吸 2–3 次、每次 10–15 分钟；散步、太极拳量力而行。','呼吸训练为辅助手段，不能替代药物治疗。']},
+{icon:'🫁',title:'氧疗与通气',items:['符合指征者（严重静息低氧血症）长期家庭氧疗 1–2 L/min、每日 ≥15 小时，切勿自行调高流量。','合并 CO2 潴留者，遵医嘱评估家庭无创通气。']},
+{icon:'🏠',title:'生活方式',items:['彻底戒烟（含电子烟），避免二手烟、油烟、粉尘。','保暖防感冒；雾霾、流感季戴口罩、少聚集。','高蛋白、少量多餐，维持理想体重（过瘦过胖均不利）。']},
+{icon:'📈',title:'自我管理',items:['识别加重早期信号：气促加重、痰量增多、痰变脓——及早就医。','静息 SpO2 持续低于 88–90% 或较平时明显下降，及时就医。']}],
+emergency:['短期内呼吸困难进行性加重，静息也喘憋（加重）。','痰量增多、变脓性或伴发热（感染）。','新出现下肢水肿、尿少、不能平卧（右心衰竭）。','头痛、嗜睡、昼夜颠倒、意识模糊（CO2 潴留/肺性脑病）。','口唇/指甲发紫；SpO2 持续 <90%。','咯血或胸痛。'],note:'出现以上任一情况，请立即就医或拨打 120！'},
+asthma:{src:'GINA 2025 / 中国支气管哮喘防治指南（2024年版）',daily:[
+{icon:'💊',title:'规范治疗（GINA 核心）',items:['所有患者均应使用含 ICS 的控制药物，不自行减停；切勿仅靠 SABA（如沙丁胺醇）单药缓解。','缓解药物遵医嘱首选 ICS-福莫特罗（抗炎缓解一体，MART 方案）；若用 SABA 应同时配合 ICS。','随身携带缓解药物；含 ICS 药物用后漱口洗脸。']},
+{icon:'📈',title:'自我监测',items:['记录哮喘日记；学会峰流速（PEF）监测并记住个人最佳值。','与医生共同制定书面「哮喘行动计划」，按绿/黄/红区分区管理。']},
+{icon:'🌸',title:'过敏原与诱因管理',items:['防螨（床品热水洗晒、防螨罩）、花粉季戴口罩关窗、宠物过敏者避免饲养、防霉防蟑螂。','戒烟并远离二手烟；避免刺激性气味、冷空气；运动前热身，必要时按行动计划预防用药。','告知医生阿司匹林/NSAIDs 等药物过敏史。']},
+{icon:'🥣',title:'生活方式',items:['鼓励适度运动（游泳、散步为宜）；控制体重（肥胖加重哮喘）。','规律作息、情绪平稳；均衡饮食，避免已知过敏食物。']},
+{icon:'📅',title:'随访与疫苗',items:['每 1–3 个月复诊评估控制水平，达标后遵医嘱阶梯调整。','每年流感疫苗；肺炎球菌疫苗遵医嘱。']}],
+emergency:['按行动计划使用缓解药物后仍不缓解，或 3 小时内持续加重。','说话困难、只能说单字；烦躁、嗜睡、意识模糊。','口唇/指甲发紫、大汗、三凹征、辅助呼吸肌参与。','PEF <60% 个人最佳值，用药后不改善。','曾有 ICU/机械通气史者，一旦出现症状立即就医。'],note:'重度哮喘发作可致命，请立即就医或拨打 120！'},
+bronchiectasis:{src:'中国成人支气管扩张症诊治专家共识 / ERS 指南',daily:[
+{icon:'🫧',title:'气道廓清（核心治疗）',items:['每日 1–2 次哈气咳/体位引流（餐前或餐后 1–2 小时），家属空心掌由下向上、由外向内拍背。','无心肾限制者充分饮水稀释痰液。','咯血期暂停引流与拍背，立即就医。']},
+{icon:'🦠',title:'感染与加重管理',items:['痰量增多、变脓或发热尽早就医，留痰培养指导抗生素。','每年急性加重 ≥3 次者，遵医嘱长期小剂量大环内酯类。','吸入抗生素仅用于特定情况，遵医嘱。']},
+{icon:'💉',title:'预防与疫苗',items:['每年流感疫苗+肺炎球菌疫苗；戒烟；重视口腔卫生。']},
+{icon:'🩸',title:'咯血自我管理',items:['少量咯血：卧床休息、患侧卧位、遵医嘱止血。','大咯血：立即患侧卧位、头低脚高、鼓励轻咳出积血，防窒息并呼救。']},
+{icon:'🩺',title:'营养与随访',items:['高蛋白高热量饮食；定期胸部 HRCT 与肺功能；局限重症病灶可评估外科治疗。']}],
+emergency:['大咯血（一次 >100 ml 或 24h >500 ml）或咯血伴呼吸困难、发绀（窒息风险）。','高热、脓痰明显增多、气促加重（急性感染）。','面色苍白、冷汗、脉搏细速、意识改变（休克/窒息）。','新发胸痛、呼吸困难。'],note:'大咯血属急症！请立即就医或拨打 120！'},
+lungcancer:{src:'中国肺癌围手术期管理专家共识 / CSCO 肿瘤康复指南',daily:[
+{icon:'💊',title:'治疗与随访',items:['按医嘱完成手术/放化疗/靶向/免疫治疗，不中断。','定期复查影像与肿瘤标志物；前 2 年每 3–6 个月一次（遵医嘱）。']},
+{icon:'🫁',title:'肺康复',items:['术前：戒烟 ≥4 周、呼吸训练（预康复）可降低并发症。','术后：遵医嘱使用激励式肺量计与深呼吸训练防肺不张；早期下床、循序渐进。']},
+{icon:'🥣',title:'营养支持',items:['高蛋白高热量、易消化；体重下降者加用口服营养补充剂（ONS）。','恶心呕吐者少量多餐，避开刺激性气味。']},
+{icon:'🦵',title:'VTE 预防',items:['多活动、踝泵运动、充分饮水；警惕单侧腿肿、突发呼吸困难（肺栓塞）。']},
+{icon:'️',title:'症状与心理管理',items:['疼痛按三阶梯规范用药，不硬扛；焦虑失眠及时告知医生。','化疗后发热（粒细胞缺乏性发热）属急症，立即就医。']},
+{icon:'💉',title:'疫苗',items:['灭活流感疫苗遵医嘱接种；免疫抑制期间避免活疫苗。']}],
+emergency:['咯血量增多或咯血伴呼吸困难。','突发剧烈胸痛、呼吸困难（肺栓塞/气胸）。','面颈及上肢肿胀、颈静脉怒张、吞咽困难（上腔静脉综合征）。','化疗期间发热 ≥38°C（粒细胞缺乏性发热，可致命）。','单侧下肢肿痛；新发头痛、呕吐、肢体无力。'],note:'出现以上情况请立即联系主管医生或拨打 120！'},
+pneumoconiosis:{src:'中国尘肺病诊断标准 / 职业性肺病康复专家共识',daily:[
+{icon:'🏭',title:'脱离与防护',items:['立即脱离粉尘作业环境；仍接触者必须佩戴合格防尘口罩，湿式作业、通风降尘。']},
+{icon:'🦠',title:'感染与并发症预防',items:['每年流感+肺炎球菌疫苗；戒烟；保暖防感冒。','咳嗽咳痰 >2 周及时查痰排查结核（尘肺易合并结核）。']},
+{icon:'🏃',title:'肺康复',items:['坚持呼吸操+腹式/缩唇呼吸+适度有氧锻炼，改善代偿能力。']},
+{icon:'🥣',title:'营养与生活',items:['均衡营养、优质蛋白、多蔬果；规律作息。']},
+{icon:'🩺',title:'定期复查',items:['定期胸片/CT、肺功能、心电图/心脏超声（筛查肺心病）；参加职业健康随访。']}],
+emergency:['突发一侧胸痛伴呼吸困难加重（自发性气胸，常见并发症）。','咯血（警惕结核/支扩）。','高热、脓痰（感染）。','口唇发紫、嗜睡、下肢水肿（呼吸衰竭/肺心病）。'],note:'出现以上任一情况，请立即就医或拨打 120！'},
+ild:{src:'ATS/ERS/JRS/ALAT 特发性肺纤维化指南 / 中国 ILD 专家共识',daily:[
+{icon:'💊',title:'规范抗纤维化治疗',items:['吡非尼酮/尼达尼布等遵医嘱足量使用，不自行停药；定期监测肝功能与不良反应。']},
+{icon:'🕊️',title:'暴露规避与戒烟',items:['避免鸟类、霉变环境、粉尘与化学气体暴露；戒烟。']},
+{icon:'💉',title:'疫苗与感染预防',items:['接种流感与肺炎球菌疫苗（呼吸道感染易诱发急性加重）；勤洗手、戴口罩。']},
+{icon:'🫁',title:'氧疗与康复',items:['低氧者遵医嘱家庭氧疗并监测指脉氧；参加肺康复改善运动耐力；活动量力而行。']},
+{icon:'🍽️',title:'合并症管理',items:['有胃食管反流症状者遵医嘱治疗；定期肺功能与 HRCT 随访。']}],
+emergency:['1 个月内呼吸困难快速进行性加重（急性加重，死亡率高），可伴发热、干咳。','新发口唇发紫、胸痛、咯血。','指脉氧较平时基线明显下降。','严重乏力、食欲差、体重下降。'],note:'ILD 急性加重凶险，请立即就医或拨打 120！'},
+pneumothorax:{src:'BTS 自发性气胸指南 / 中国专家共识',daily:[
+{icon:'🚫',title:'活动与压力管理',items:['恢复期 3–6 个月避免提重物、剧烈运动、用力屏气与用力排便。','避免吹气球、吹奏乐器；潜水终身禁止（除非已完成双侧胸膜固定术）。','1 年内不建议乘坐飞机；此后如需乘机须先经医生评估。','剧咳时遵医嘱止咳，避免胸腔压力骤增。']},
+{icon:'🚭',title:'复发预防',items:['戒烟可显著降低复发率；瘦高体型青年避免突然剧烈运动。']},
+{icon:'🩺',title:'随访',items:['出院后 1 个月、3 个月遵医嘱复查胸片/CT；突发胸痛气促立即就医。']},
+{icon:'🥣',title:'营养',items:['高蛋白+粗纤维饮食，促进愈合、预防便秘。']},
+{icon:'️',title:'训练警示',items:['本期切勿自行进行本应用呼吸训练；活动强度严格遵医嘱。']}],
+emergency:['突发一侧尖锐胸痛，随后呼吸困难进行性加重（复发）。','严重呼吸困难、发绀、烦躁、冷汗、血压下降（张力性气胸，即刻致命！）。','颈部/胸部皮下握雪感、肿胀（皮下气肿进展）。'],note:'气胸复发常见且可致命，请立即就医或拨打 120！'},
+effusion:{src:'BTS 胸腔积液指南 / 中国专家共识',daily:[
+{icon:'🩺',title:'病因治疗优先',items:['积液是表现，必须明确并治疗原发病（结核/肿瘤/心衰/肺炎旁等）。','遵医嘱复查胸部超声/X 线，观察积液吸收；引流后保持敷料干燥。']},
+{icon:'🫁',title:'呼吸与活动',items:['腹式呼吸与深呼吸训练促进肺复张、预防胸膜粘连。','积液减少后逐步增加步行等有氧活动，量力而行。']},
+{icon:'🥣',title:'营养',items:['高蛋白、易消化饮食（大量积液丢失蛋白）；心衰病因者遵医嘱限盐限水。']},
+{icon:'⚖️',title:'自我监测',items:['每日称体重、记尿量、观察下肢水肿；记录活动后气促变化。']}],
+emergency:['呼吸困难突然加重、不能平卧（积液快速增多）。','胸痛、发热、寒战（感染/脓胸）。','咯血。','尿量明显减少伴下肢水肿加重（心/肾）。'],note:'出现以上任一情况，请立即就医或拨打 120！'},
+tb:{src:'中国结核病防治指南（2024年版）',daily:[
+{icon:'💊',title:'规范化疗',items:['早期、联合、适量、规律、全程；标准方案通常 6 个月（2HRZE/4HR），耐药者遵医嘱延长。','接受督导治疗（DOT），绝不自行停药/减量；设闹钟防漏服。','利福平致尿液橙红属正常；避免与酒精同服。']},
+{icon:'🦠',title:'感染控制',items:['传染期佩戴口罩、分室居住；居室每日通风 2–3 次、每次 ≥30 分钟。','咳嗽掩口鼻，痰吐入带盖含消毒液容器；被褥勤晒。','密切接触者（尤其儿童、HIV 感染者）应筛查。']},
+{icon:'🩺',title:'不良反应监测',items:['每月复查肝肾功能、血常规；定期痰检与胸片直至疗程结束。','出现黄疸、严重胃肠反应、皮疹、视物/色觉改变（乙胺丁醇）、耳鸣听力下降，立即报告医生。']},
+{icon:'🍽️',title:'营养与休息',items:['高蛋白、高维生素饮食；绝对禁酒。','活动期以休息为主；恢复期经医生评估后逐步增加呼吸训练与散步。']}],
+emergency:['中量以上咯血或咯血伴呼吸困难（窒息风险）。','突发胸痛伴呼吸困难（合并气胸）。','持续高热不退。','黄疸、严重恶心呕吐、广泛皮疹（严重药物反应）。','视物/色觉改变、耳鸣听力下降。'],note:'出现以上情况请立即就医或拨打 120！'},
+corpulmonale:{src:'中国慢性肺源性心脏病诊治专家共识（2024）',daily:[
+{icon:'🫁',title:'氧疗管理',items:['长期家庭氧疗 1–2 L/min、每日 ≥15 小时；切勿自行调高流量（防 CO2 潴留）。','合并高碳酸血症者，遵医嘱评估家庭无创通气。']},
+{icon:'💊',title:'用药安全',items:['利尿剂小剂量使用、监测电解质；强心/扩血管药严格遵医嘱。','慎用镇静催眠药与镇咳阿片类（抑制呼吸、诱发肺性脑病），必须使用时先问医生。','吸入药物规范使用并漱口。']},
+{icon:'🧂',title:'饮食与排便',items:['低盐（<3g/日）、少量多餐、高蛋白易消化；限水遵医嘱；保持大便通畅。']},
+{icon:'⚖️',title:'每日监测',items:['晨起空腹称体重：1 周增重 >2kg 提示水钠潴留，及时就医。','观察尿量、下肢水肿、口唇颜色；家属留意嗜睡/昼夜颠倒。']},
+{icon:'🦠',title:'感染预防',items:['接种流感/肺炎球菌疫苗；保暖；痰量增多尽早就医（感染是最常见加重诱因）。']},
+{icon:'🏃',title:'康复',items:['稳定期低强度缩唇/腹式呼吸训练，耐受为度；加重期以休息为主。']}],
+emergency:['嗜睡、昼夜颠倒、意识模糊、昏迷（肺性脑病）。','呼吸困难加重伴口唇发紫。','下肢水肿明显、尿少、腹胀、肝大（右心衰竭加重）。','心悸、心律不齐。','咯血或胸痛。'],note:'肺性脑病可致命！出现以上情况请立即就医或拨打 120！'},
+osa:{src:'中国成人阻塞性睡眠呼吸暂停诊治指南（2024）/ AASM',daily:[
+{icon:'⚖️',title:'体重管理（基石）',items:['减重 5–10% 以上可显著改善 AHI；控制总热量+规律运动。']},
+{icon:'😮',title:'CPAP 一线治疗',items:['遵医嘱每晚佩戴呼吸机；定期清洗面罩、管路、湿化器；随访调整压力。','呼吸训练不能替代 CPAP 等规范治疗。']},
+{icon:'😴',title:'睡眠卫生',items:['侧卧睡眠；规律作息；抬高床头；睡前 4–6 小时避免饮酒；慎用镇静安眠药。']},
+{icon:'🚭',title:'戒烟限酒',items:['吸烟致气道水肿加重打鼾；酒精加重夜间呼吸暂停。']},
+{icon:'🩺',title:'合并症与随访',items:['监测并管理高血压、糖尿病、心律失常、抑郁；复查 PSG 或家庭睡眠监测。']},
+{icon:'🚗',title:'安全警示',items:['白天嗜睡明显时避免驾车与高空/机械作业。']}],
+emergency:['目击长时呼吸暂停后意识恢复差。','晨起胸痛、心悸、晕厥（心血管事件）。','白天极端嗜睡导致交通事故或险情。','晨起剧烈头痛、意识混乱。'],note:'合并胸痛心悸或意识异常，请立即就医或拨打 120！'},
+quit:{src:'中国临床戒烟指南（2023）',daily:[
+{icon:'🎯',title:'戒烟准备',items:['确定戒烟日（2 周内）；告知家人同事争取支持；丢弃所有烟草、打火机、烟灰缸；清洗环境烟味。']},
+{icon:'💊',title:'一线戒烟药物',items:['尼古丁替代（贴片/咀嚼胶）、伐尼克兰、安非他酮可使成功率翻倍；请到戒烟门诊或咨询 12320，遵医嘱使用。']},
+{icon:'🧠',title:'渴求应对（4D 法）',items:['Delay 延迟、Distract 分散、Deep breathing 深呼吸、Drink water 喝水；渴求高峰通常 3–5 分钟消退，可跟练本应用深呼吸。','改变伴烟习惯：饭后散步/刷牙；回避烟酒咖啡场景。']},
+{icon:'📅',title:'防复吸',items:['复吸高发于前 3 个月；偶吸≠失败，总结后重新开始；设立里程碑奖励。']},
+{icon:'🏃',title:'生活方式',items:['增加运动减少渴求与体重增长；多果蔬、限酒。']},
+{icon:'👪',title:'保护家人',items:['二手、三手烟危害家人（儿童哮喘、孕妇早产）；戒烟惠及全家。']}],
+emergency:['戒烟期间出现持续严重情绪低落、失眠或自伤念头（罕见，与部分药物相关），立即停药并就医。','任何时候出现胸痛、咯血、声音嘶哑、吞咽困难等警示症状，立即就医（长期吸烟者需排查肿瘤/心血管病）。'],note:'戒烟任何时候都不晚：20 分钟心率下降，10 年肺癌风险减半！'}
 };
 
 /* ================= 核心逻辑 ================= */
-const $=s=>document.querySelector(s);
-let currentDisease = localStorage.getItem('hl_disease');
+function $(s){return document.querySelector(s);}
+var currentDisease=localStorage.getItem('hl_disease');
 
-// 初始化路由
-function initApp() {
-  if(!currentDisease) {
+function initApp(){
+  renderDiseaseList();
+  if(!currentDisease){
     $('#view-disease').classList.add('active');
-    $('#tabbar').style.display = 'none';
-    renderDiseaseList();
-  } else {
-    $('#view-home').classList.add('active');
-    $('#tabbar').style.display = 'flex';
+    $('#tabbar').style.display='none';
+  }else{
     applyDisease();
+    switchTab('home');
   }
+  $('#bootError').style.display='none';
 }
-
-// 疾病列表渲染
-function renderDiseaseList() {
-  $('#diseaseList').innerHTML = DISEASES.map(d => `
-    <div class="dItem" onclick="selectDisease('${d.id}')">
-      <div class="dIcon" style="background:${d.color}22">${d.icon}</div>
-      <div class="dInfo"><b>${d.name}</b><p>${d.desc}</p></div>
-    </div>
-  `).join('');
+function showBoot(msg){
+  var el=$('#bootError');
+  if(el){el.style.display='block';el.innerHTML='⚠️ '+msg+'<br>请在电脑上重新完整复制本文件后重试。';}
 }
-
-function selectDisease(id) {
-  currentDisease = id;
-  localStorage.setItem('hl_disease', id);
+function renderDiseaseList(){
+  var html='';
+  DISEASES.forEach(function(d){
+    html+='<div class="dItem '+(d.id===currentDisease?'selected':'')+'" onclick="selectDisease(\''+d.id+'\')">'
+      +'<div class="dIcon" style="background:'+d.color+'22">'+d.icon+'</div>'
+      +'<div class="dInfo"><b>'+d.name+'</b><p>'+d.desc+'</p></div>'
+      +(d.id===currentDisease?'<span class="dCheck">✓</span>':'')+'</div>';
+  });
+  $('#diseaseList').innerHTML=html;
+}
+function selectDisease(id){
+  var changed=currentDisease!==id;
+  currentDisease=id;localStorage.setItem('hl_disease',id);
   $('#view-disease').classList.remove('active');
-  $('#view-home').classList.add('active');
-  $('#tabbar').style.display = 'flex';
-  applyDisease();
+  $('#tabbar').style.display='flex';
+  applyDisease();switchTab('home');
+  if(changed)toast('✅ 已切换至专属康复方案');
 }
-
-function changeDisease() {
-  $('#view-me').classList.remove('active');
+function changeDisease(){
+  renderDiseaseList();
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
   $('#view-disease').classList.add('active');
-  $('#tabbar').style.display = 'none';
+  $('#tabbar').style.display='none';
+  $('#view-disease').scrollTop=0;
 }
-
-function applyDisease() {
-  const d = DISEASES.find(x => x.id === currentDisease);
-  $('#currentDiseaseName').textContent = d.name + ' · 专属方案';
-  $('#trainSub').textContent = `针对「${d.name}」的指南推荐方案`;
-  
-  // 渲染首页快速开始 (只放推荐的)
-  $('#quickStart').innerHTML = d.recTrain.slice(0, 3).map(tid => {
-    const t = TRAININGS.find(x => x.id === tid);
-    return `<button class="qbtn" style="background:${t.color}" onclick="openDetail('${t.id}')">${t.icon}<br>${t.name}</button>`;
-  }).join('');
-
-  renderTrainList();
-  renderAssess();
-  loadHomeStats();
-}
-
-// 训练列表 (带推荐标识)
-function renderTrainList() {
-  const d = DISEASES.find(x => x.id === currentDisease);
-  // 排序：推荐的在前
-  const sorted = [...TRAININGS].sort((a, b) => {
-    const aRec = d.recTrain.includes(a.id) ? 0 : 1;
-    const bRec = d.recTrain.includes(b.id) ? 0 : 1;
-    return aRec - bRec;
-  });
-
-  $('#trainList').innerHTML = sorted.map(t => {
-    const isRec = d.recTrain.includes(t.id);
-    return `
-    <div class="tItem ${isRec ? 'recommended' : ''}" onclick="openDetail('${t.id}')">
-      ${isRec ? '<span class="recBadge">指南推荐</span>' : ''}
-      <div class="tIcon" style="background:${t.color}22">${t.icon}</div>
-      <div class="tInfo"><b>${t.name}</b><p>${t.desc}</p>
-        <div class="tags">${t.tags.map(x=>`<span class="tag">${x}</span>`).join('')}</div></div>
-      <span class="arrow">›</span>
-    </div>`;
-  }).join('');
-}
-
-// 评估量表渲染
-function renderAssess() {
-  const d = DISEASES.find(x => x.id === currentDisease);
-  const ass = ASSESSMENTS[d.assess];
-  $('#assessSub').textContent = `当前疾病：${d.name}`;
-  
-  let html = `<div class="assessIntro">📋 <b>${ass.name}</b><br>${ass.desc}</div>`;
-  
-  ass.questions.forEach((q, qi) => {
-    html += `<div class="qCard"><div class="qTitle">${q.q}</div><div class="qOpts">`;
-    q.opts.forEach((opt, oi) => {
-      html += `<label><input type="radio" name="q${qi}" value="${opt.score}" onchange="checkAssessComplete()"><span>${opt.text}</span></label>`;
+function applyDisease(){
+  var d=DISEASES.find(function(x){return x.id===currentDisease;});
+  $('#currentDiseaseName').textContent=d.name+' · 专属方案';
+  $('#trainSub').textContent='针对「'+d.name+'」的指南推荐方案';
+  var q='';
+  if(d.noTrain){
+    q='<div class="trainNotice" style="grid-column:1/-1;margin-top:0">🚫 '+d.noTrainNote+'</div>';
+  }else{
+    d.recTrain.slice(0,3).forEach(function(tid){
+      var t=TRAININGS.find(function(x){return x.id===tid;});
+      q+='<button class="qbtn" style="background:'+t.color+'" onclick="openDetail(\''+t.id+'\')">'+t.icon+'<br>'+t.name+'</button>';
     });
-    html += `</div></div>`;
+  }
+  $('#quickStart').innerHTML=q;
+  renderTrainList();renderAssess();renderEdu();loadHomeStats();
+}
+function switchTab(v){
+  document.querySelectorAll('.tabbtn').forEach(function(x){x.classList.toggle('on',x.dataset.v===v);});
+  document.querySelectorAll('.view').forEach(function(x){x.classList.remove('active');});
+  $('#view-'+v).classList.add('active');
+  if(v==='me')renderStats();
+  if(v==='edu')renderEdu();
+  if(v==='home')loadHomeStats();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tabbtn').forEach(function(b){b.onclick=function(){switchTab(b.dataset.v);};});
+
+function renderTrainList(){
+  var d=DISEASES.find(function(x){return x.id===currentDisease;});
+  var html='';
+  if(d.noTrain){html+='<div class="trainNotice" style="margin-top:0">🚫 '+d.noTrainNote+'</div>';}
+  var sorted=TRAININGS.slice().sort(function(a,b){
+    return (d.recTrain.indexOf(a.id)>=0?0:1)-(d.recTrain.indexOf(b.id)>=0?0:1);
   });
-  
-  html += `<button class="submitBtn" id="btnSubmitAssess" onclick="submitAssess()" disabled>提交评估</button>`;
-  html += `<div id="assessResult"></div>`;
-  
-  $('#assessBox').innerHTML = html;
+  sorted.forEach(function(t){
+    var isRec=d.recTrain.indexOf(t.id)>=0;
+    var dis=!!d.noTrain;
+    var tags='';t.tags.forEach(function(x){tags+='<span class="tag">'+x+'</span>';});
+    html+='<div class="tItem '+(isRec?'recommended':'')+(dis?' disabled':'')+'" onclick="'+(dis?'trainLocked()':'openDetail(\''+t.id+'\')')+'">'
+      +(isRec?'<span class="recBadge">指南推荐</span>':'')
+      +'<div class="tIcon" style="background:'+t.color+'22">'+t.icon+'</div>'
+      +'<div class="tInfo"><b>'+t.name+'</b><p>'+t.desc+'</p><div class="tags">'+tags+'</div></div>'
+      +'<span class="arrow">'+(dis?'🔒':'›')+'</span></div>';
+  });
+  $('#trainList').innerHTML=html;
+}
+function trainLocked(){
+  toast('🚫 气胸恢复期训练暂不开放，请遵医嘱，参见「健康宣教」');
 }
 
-function checkAssessComplete() {
-  const d = DISEASES.find(x => x.id === currentDisease);
-  const ass = ASSESSMENTS[d.assess];
-  let complete = true;
-  ass.questions.forEach((q, qi) => {
-    if(!document.querySelector(`input[name="q${qi}"]:checked`)) complete = false;
+/* ---------- 评估 ---------- */
+function renderAssess(){
+  var d=DISEASES.find(function(x){return x.id===currentDisease;});
+  var ass=ASSESSMENTS[d.assess];
+  $('#assessSub').textContent='当前疾病：'+d.name;
+  var html='<div class="assessIntro">📋 <b>'+ass.name+'</b><br>'+ass.desc+'</div>';
+  ass.questions.forEach(function(q,qi){
+    html+='<div class="qCard"><div class="qTitle">'+q.q+'</div><div class="qOpts">';
+    q.opts.forEach(function(opt){
+      html+='<label onclick="this.parentNode.querySelectorAll(\'label\').forEach(function(l){l.classList.remove(\'checked\')});this.classList.add(\'checked\')"><input type="radio" name="q'+qi+'" value="'+opt.score+'" onchange="checkAssessComplete()"><span>'+opt.text+'</span></label>';
+    });
+    html+='</div></div>';
   });
-  $('#btnSubmitAssess').disabled = !complete;
+  html+='<div class="btnRow"><button class="submitBtn" id="btnSubmitAssess" onclick="submitAssess()" disabled>提交评估</button><button class="resetBtn" onclick="resetAssess()">重置</button></div><div id="assessResult"></div>';
+  html+='<div class="card" style="margin-top:16px"><h3>📈 每日评分趋势</h3><div id="assessChart"></div></div>';
+  $('#assessBox').innerHTML=html;
+  renderAssessChart();
+}
+function resetAssess(){renderAssess();toast('已重置评估');}
+function checkAssessComplete(){
+  var d=DISEASES.find(function(x){return x.id===currentDisease;});
+  var ass=ASSESSMENTS[d.assess];
+  var ok=true;
+  ass.questions.forEach(function(q,qi){
+    if(!document.querySelector('input[name="q'+qi+'"]:checked'))ok=false;
+  });
+  $('#btnSubmitAssess').disabled=!ok;
+}
+function getAssessRecords(){return JSON.parse(localStorage.getItem('hl_assess')||'{}');}
+function addAssessRecord(key,score){
+  var all=getAssessRecords();
+  if(!all[key])all[key]={};
+  all[key][new Date().toISOString().slice(0,10)]=score;
+  localStorage.setItem('hl_assess',JSON.stringify(all));
+}
+function submitAssess(){
+  var d=DISEASES.find(function(x){return x.id===currentDisease;});
+  var ass=ASSESSMENTS[d.assess];
+  var total=0;
+  ass.questions.forEach(function(q,qi){
+    total+=parseFloat(document.querySelector('input[name="q'+qi+'"]:checked').value);
+  });
+  addAssessRecord(d.assess,total);
+  var res=ass.result(total);
+  $('#assessResult').innerHTML='<div class="resultCard" style="border-top-color:'+res.color+'"><h3>评估结果</h3><div class="score" style="color:'+res.color+'">'+res.level+'</div><div class="advice">💡 <b>康复建议：</b>'+res.text+'</div></div>';
+  $('#btnSubmitAssess').style.display='none';
+  renderAssessChart();
+  $('#assessResult').scrollIntoView({behavior:'smooth'});
+}
+function renderAssessChart(){
+  var box=$('#assessChart');
+  if(!box)return;
+  var d=DISEASES.find(function(x){return x.id===currentDisease;});
+  var key=d.assess,ass=ASSESSMENTS[key];
+  var rec=getAssessRecords()[key]||{};
+  var pts=Object.keys(rec).sort().map(function(k){return {d:k,s:rec[k]};}).slice(-10);
+  if(!pts.length){box.innerHTML='<p class="chartEmpty">暂无评估记录，完成一次评估后自动生成每日趋势图。</p>';return;}
+  var lo=ass.range[0],hi=ass.range[1];
+  var W=320,H=150,PL=30,PR=12,PT=14,PB=26;
+  function X(i){return pts.length<2?PL+(W-PL-PR)/2:PL+i*(W-PL-PR)/(pts.length-1);}
+  function Y(s){var v=Math.min(Math.max(s,lo),hi);return PT+(hi-v)/(hi-lo)*(H-PT-PB);}
+  var grid='';
+  [hi,(hi+lo)/2,lo].forEach(function(v){var y=Y(v);grid+='<line x1="'+PL+'" y1="'+y+'" x2="'+(W-PR)+'" y2="'+y+'" stroke="#e2e8f0"/><text x="'+(PL-4)+'" y="'+(y+3)+'" font-size="9" fill="#94a3b8" text-anchor="end">'+v+'</text>';});
+  var line='',dots='';
+  pts.forEach(function(p,i){
+    line+=(i?' ':'')+X(i)+','+Y(p.s);
+    dots+='<circle cx="'+X(i)+'" cy="'+Y(p.s)+'" r="3.5" fill="#0d9488"><title>'+p.d+'：'+p.s+'分</title></circle>';
+  });
+  var dates='<text x="'+X(0)+'" y="'+(H-8)+'" font-size="9" fill="#94a3b8">'+pts[0].d.slice(5)+'</text>';
+  if(pts.length>1)dates+='<text x="'+X(pts.length-1)+'" y="'+(H-8)+'" font-size="9" fill="#94a3b8" text-anchor="end">'+pts[pts.length-1].d.slice(5)+'</text>';
+  var trend='';
+  if(pts.length>1){
+    var diff=pts[pts.length-1].s-pts[0].s;
+    var better=(ass.goodDir==='down'&&diff<0)||(ass.goodDir==='up'&&diff>0);
+    var worse=(ass.goodDir==='down'&&diff>0)||(ass.goodDir==='up'&&diff<0);
+    trend=better?'<span class="tag" style="color:#0d9488;background:#ccfbf1">总体改善 📉</span>':(worse?'<span class="tag" style="color:#b91c1c;background:#fef2f2">呈加重趋势，需关注 ⚠️</span>':'<span class="tag" style="color:#475569;background:#f1f5f9">相对稳定 ➖</span>');
+  }
+  box.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%">'+grid+'<polyline points="'+line+'" fill="none" stroke="#0d9488" stroke-width="2"/>'+dots+dates+'</svg><div style="margin-top:6px;font-size:13px;color:#475569">最近一次：<b style="color:#0d9488">'+pts[pts.length-1].s+' 分</b>（'+pts[pts.length-1].d+'） '+trend+'</div>';
 }
 
-function submitAssess() {
-  const d = DISEASES.find(x => x.id === currentDisease);
-  const ass = ASSESSMENTS[d.assess];
-  let totalScore = 0;
-  
-  ass.questions.forEach((q, qi) => {
-    totalScore += parseFloat(document.querySelector(`input[name="q${qi}"]:checked`).value);
+/* ---------- 宣教 ---------- */
+function renderEdu(){
+  var d=DISEASES.find(function(x){return x.id===currentDisease;});
+  var e=EDUCATION[d.id];
+  $('#eduSub').textContent='当前疾病：'+d.name;
+  var html='<div class="assessIntro">📖 指南依据：'+e.src+'</div>';
+  html+='<div class="card"><h3>📚 日常健康管理（分组详解）</h3>';
+  e.daily.forEach(function(g){
+    html+='<div class="eduGroup"><div class="eduGroupTitle">'+g.icon+' '+g.title+'</div><ul class="eduList">';
+    g.items.forEach(function(t){html+='<li><span class="dot"></span><span>'+t+'</span></li>';});
+    html+='</ul></div>';
   });
-  
-  const res = ass.result(totalScore);
-  $('#assessResult').innerHTML = `
-    <div class="resultCard" style="border-top-color:${res.color}">
-      <h3>评估结果</h3>
-      <div class="score" style="color:${res.color}">${res.level}</div>
-      <div class="advice">💡 <b>康复建议：</b>${res.text}</div>
-    </div>
-  `;
-  $('#btnSubmitAssess').style.display = 'none';
-  document.getElementById('assessResult').scrollIntoView({behavior:'smooth'});
+  html+='</div><div class="card emergency"><h3>🚨 紧急就诊警示（独立分区）</h3><ul>';
+  e.emergency.forEach(function(t){html+='<li>⚠️ '+t+'</li>';});
+  html+='</ul><p class="emNote">'+e.note+'</p><a class="call120" href="tel:120">📞 紧急情况拨打 120</a></div>';
+  $('#eduBox').innerHTML=html;
 }
 
-/* ================= 训练引擎 (带语音) ================= */
-let S={t:null,pi:0,cycle:1,cycles:5,remain:0,tick:null,running:false,started:false,sound:true};
+/* ---------- 训练引擎 ---------- */
+var S={t:null,pi:0,cycle:1,cycles:5,remain:0,tick:null,running:false,started:false,sound:true};
 function openDetail(id){
-  S.t=TRAININGS.find(t=>t.id===id);reset();
+  S.t=TRAININGS.find(function(t){return t.id===id;});reset();
   $('#dTitle').textContent=S.t.icon+' '+S.t.name;
   $('#sceneBox').innerHTML=SCENES[id];
   $('#ratioBadge').textContent=S.t.ratio;
-  $('#stepsBox').innerHTML=S.t.steps.map(s=>`<li>${s}</li>`).join('');
-  $('#tipsBox').innerHTML=S.t.tips.map(s=>`<li class="tip">${s}</li>`).join('');
-  $('#view-detail').classList.add('active');
-  $('#view-detail').scrollTop=0;
+  var s1='';S.t.steps.forEach(function(s){s1+='<li>'+s+'</li>';});$('#stepsBox').innerHTML=s1;
+  var s2='';S.t.tips.forEach(function(s){s2+='<li class="tip">'+s+'</li>';});$('#tipsBox').innerHTML=s2;
+  $('#view-detail').classList.add('active');$('#view-detail').scrollTop=0;
 }
-function closeDetail(){$('#view-detail').classList.remove('active');clearInterval(S.tick);window.speechSynthesis.cancel();}
-function toggleSound(){S.sound=!S.sound;$('#btnSound').textContent=S.sound?'🔊':'🔇';}
-document.querySelectorAll('.cyc').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('.cyc').forEach(x=>x.classList.remove('on'));
+function closeDetail(){$('#view-detail').classList.remove('active');clearInterval(S.tick);if('speechSynthesis' in window)window.speechSynthesis.cancel();}
+function toggleSound(){S.sound=!S.sound;$('#btnSound').textContent=S.sound?'🔊':'';}
+document.querySelectorAll('.cyc').forEach(function(b){b.onclick=function(){
+  document.querySelectorAll('.cyc').forEach(function(x){x.classList.remove('on');});
   b.classList.add('on');S.cycles=+b.dataset.c;updCycle();
-});
-function updCycle(){$('#cycleInfo').textContent=`第 ${S.cycle} / ${S.cycles} 组`;}
-
+};});
+function updCycle(){$('#cycleInfo').textContent='第 '+S.cycle+' / '+S.cycles+' 组';}
 function setPhase(i){
-  const ph=S.t.phases[i];S.pi=i;S.remain=ph.dur;
-  const root=$('#view-detail');
+  var ph=S.t.phases[i];S.pi=i;S.remain=ph.dur;
+  var root=$('#view-detail');
   root.classList.remove('phase-in','phase-hold','phase-out');
   root.classList.add('phase-'+ph.k);
   root.style.setProperty('--dur',ph.dur+'s');
-  $('#phaseName').textContent=ph.name;
-  $('#phaseHint').textContent=ph.hint;
-  $('#count').textContent=ph.dur;
-  speak(ph.voice); beep(ph.k); if(navigator.vibrate)navigator.vibrate(50);
+  $('#phaseName').textContent=ph.name;$('#phaseHint').textContent=ph.hint;$('#count').textContent=ph.dur;
+  speak(ph.voice);beep(ph.k);if(navigator.vibrate)navigator.vibrate(50);
 }
 function onStart(){
   if(S.running){pause();return;}
@@ -583,22 +721,18 @@ function step(){
   S.remain--;
   if(S.remain<=0){
     if(S.pi+1<S.t.phases.length)setPhase(S.pi+1);
-    else{
-      S.cycle++;
-      if(S.cycle>S.cycles){finish();return;}
-      updCycle();setPhase(0);
-    }
+    else{S.cycle++;if(S.cycle>S.cycles){finish();return;}updCycle();setPhase(0);}
   }else $('#count').textContent=S.remain;
 }
 function pause(){S.running=false;clearInterval(S.tick);$('#view-detail').classList.add('paused');$('#btnStart').textContent='继续';}
 function reset(){
   clearInterval(S.tick);S.running=false;S.started=false;S.cycle=1;S.pi=0;
-  const root=$('#view-detail');
+  var root=$('#view-detail');
   root.classList.remove('phase-in','phase-hold','phase-out','paused');
   $('#phaseName').textContent='准备';$('#count').textContent='–';
   $('#phaseHint').textContent='选择组数后点击「开始训练」';
   $('#btnStart').textContent='开始训练';updCycle();
-  window.speechSynthesis.cancel();
+  if('speechSynthesis' in window)window.speechSynthesis.cancel();
 }
 function finish(){
   clearInterval(S.tick);S.running=false;
@@ -606,17 +740,15 @@ function finish(){
   $('#phaseName').textContent='完成';$('#count').textContent='🎉';
   $('#phaseHint').textContent='训练完成，已自动打卡！';
   $('#btnStart').textContent='再来一次';S.started=false;
-  addRecord(S.t.id);
-  toast('🎉 完成训练，已打卡记录！');
+  addRecord(S.t.id);toast('🎉 完成训练，已打卡记录！');
 }
-/* 语音与提示音 */
-let AC;
+var AC=null;
 function speak(text){
-  if(!S.sound) return;
+  if(!S.sound)return;
   if('speechSynthesis' in window){
     window.speechSynthesis.cancel();
-    const msg = new SpeechSynthesisUtterance(text);
-    msg.lang = 'zh-CN'; msg.rate = 0.8;
+    var msg=new SpeechSynthesisUtterance(text);
+    msg.lang='zh-CN';msg.rate=0.8;
     window.speechSynthesis.speak(msg);
   }
 }
@@ -624,91 +756,74 @@ function beep(k){
   if(!S.sound)return;
   try{
     AC=AC||new (window.AudioContext||window.webkitAudioContext)();
-    const o=AC.createOscillator(),g=AC.createGain();
-    o.frequency.value=k==='in'?523:k==='hold'?659:392;
+    var o=AC.createOscillator(),g=AC.createGain();
+    o.frequency.value=k==='in'?523:(k==='hold'?659:392);
     g.gain.setValueAtTime(.0001,AC.currentTime);
     g.gain.exponentialRampToValueAtTime(.1,AC.currentTime+.05);
     g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+.4);
     o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+.45);
   }catch(e){}
 }
-/* 打卡统计 */
-function getRecords(){ return JSON.parse(localStorage.getItem('hl_records') || '{}'); }
+/* ---------- 打卡统计 ---------- */
+function getRecords(){return JSON.parse(localStorage.getItem('hl_records')||'{}');}
 function addRecord(tid){
-  const records = getRecords();
-  const today = new Date().toISOString().slice(0, 10);
-  if(!records[today]) records[today] = {};
-  records[today][tid] = (records[today][tid] || 0) + 1;
-  records[today].total = (records[today].total || 0) + 1;
-  localStorage.setItem('hl_records', JSON.stringify(records));
+  var records=getRecords();
+  var today=new Date().toISOString().slice(0,10);
+  if(!records[today])records[today]={};
+  records[today][tid]=(records[today][tid]||0)+1;
+  records[today].total=(records[today].total||0)+1;
+  localStorage.setItem('hl_records',JSON.stringify(records));
   loadHomeStats();
 }
 function loadHomeStats(){
-  const records = getRecords();
-  const today = new Date().toISOString().slice(0, 10);
-  $('#stToday').textContent = records[today]?.total || 0;
-  let streak = 0; let d = new Date();
-  while(true){
-    const key = d.toISOString().slice(0,10);
-    if(records[key] && records[key].total > 0){ streak++; d.setDate(d.getDate()-1); } else break;
+  var records=getRecords();
+  var today=new Date().toISOString().slice(0,10);
+  $('#stToday').textContent=(records[today]&&records[today].total)||0;
+  var streak=0,d=new Date();
+  for(;;){
+    var key=d.toISOString().slice(0,10);
+    if(records[key]&&records[key].total>0){streak++;d.setDate(d.getDate()-1);}else break;
   }
-  $('#stStreak').textContent = streak;
+  $('#stStreak').textContent=streak;
 }
-/* 导航与统计渲染 */
-document.querySelectorAll('.tabbtn').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('.tabbtn').forEach(x=>x.classList.remove('on'));
-  b.classList.add('on');
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  $('#view-'+b.dataset.v).classList.add('active');
-  if(b.dataset.v==='me') renderStats();
-});
 function renderStats(){
-  const records = getRecords();
-  const keys = Object.keys(records).filter(k=>k!=='total');
-  let totalCount = 0; let typeCounts = {};
-  TRAININGS.forEach(t=>typeCounts[t.id]=0);
-  keys.forEach(date=>{
-    totalCount += records[date].total || 0;
-    Object.keys(records[date]).forEach(k=>{
-      if(k!=='total' && typeCounts[k]!==undefined) typeCounts[k] += records[date][k];
+  var records=getRecords();
+  var keys=Object.keys(records).filter(function(k){return k!=='total';});
+  var totalCount=0,typeCounts={};
+  TRAININGS.forEach(function(t){typeCounts[t.id]=0;});
+  keys.forEach(function(date){
+    totalCount+=records[date].total||0;
+    Object.keys(records[date]).forEach(function(k){
+      if(k!=='total'&&typeCounts[k]!==undefined)typeCounts[k]+=records[date][k];
     });
   });
-  $('#statTotalDays').textContent = keys.length;
-  $('#statTotalCount').textContent = totalCount;
-  const now = new Date();
-  const y = now.getFullYear(), m = now.getMonth();
-  const firstDay = new Date(y, m, 1).getDay();
-  const daysInMonth = new Date(y, m+1, 0).getDate();
-  const todayStr = now.toISOString().slice(0,10);
-  let calHtml = ['日','一','二','三','四','五','六'].map(d=>`<div class="calHead">${d}</div>`).join('');
-  for(let i=0; i<firstDay; i++) calHtml += `<div></div>`;
-  for(let d=1; d<=daysInMonth; d++){
-    const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isActive = records[dateStr] && records[dateStr].total > 0;
-    const isToday = dateStr === todayStr;
-    calHtml += `<div class="calDay ${isActive?'active':''} ${isToday?'today':''}">${d}</div>`;
+  $('#statTotalDays').textContent=keys.length;
+  $('#statTotalCount').textContent=totalCount;
+  var now=new Date(),y=now.getFullYear(),m=now.getMonth();
+  var firstDay=new Date(y,m,1).getDay();
+  var daysInMonth=new Date(y,m+1,0).getDate();
+  var todayStr=now.toISOString().slice(0,10);
+  var calHtml='';
+  ['日','一','二','三','四','五','六'].forEach(function(d){calHtml+='<div class="calHead">'+d+'</div>';});
+  for(var i=0;i<firstDay;i++)calHtml+='<div></div>';
+  for(var dd=1;dd<=daysInMonth;dd++){
+    var dateStr=y+'-'+String(m+1).padStart(2,'0')+'-'+String(dd).padStart(2,'0');
+    var isActive=records[dateStr]&&records[dateStr].total>0;
+    calHtml+='<div class="calDay '+(isActive?'active':'')+(dateStr===todayStr?' today':'')+'">'+dd+'</div>';
   }
-  $('#calGrid').innerHTML = calHtml;
-  let maxCount = Math.max(...Object.values(typeCounts), 1);
-  let barHtml = '';
-  TRAININGS.forEach(t=>{
-    const count = typeCounts[t.id];
-    const pct = Math.round((count/maxCount)*100);
-    barHtml += `<div class="barItem">
-      <div class="barLabel"><span>${t.icon} ${t.name}</span><span>${count}次</span></div>
-      <div class="barTrack"><div class="barFill" style="width:${pct}%"></div></div>
-    </div>`;
+  $('#calGrid').innerHTML=calHtml;
+  var maxCount=Math.max.apply(null,Object.values(typeCounts).concat([1]));
+  var barHtml='';
+  TRAININGS.forEach(function(t){
+    var count=typeCounts[t.id],pct=Math.round(count/maxCount*100);
+    barHtml+='<div class="barItem"><div class="barLabel"><span>'+t.icon+' '+t.name+'</span><span>'+count+'次</span></div><div class="barTrack"><div class="barFill" style="width:'+pct+'%"></div></div></div>';
   });
-  $('#barChart').innerHTML = barHtml;
+  $('#barChart').innerHTML=barHtml;
 }
-function toast(msg){const t=$('#toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2200);}
+function toast(msg){var t=$('#toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2200);}
+document.body.addEventListener('click',function(){if('speechSynthesis' in window&&window.speechSynthesis.paused)window.speechSynthesis.resume();},{once:true});
 
-// 激活语音引擎
-document.body.addEventListener('click', ()=>{
-  if('speechSynthesis' in window && window.speechSynthesis.paused) window.speechSynthesis.resume();
-}, {once:true});
-
-initApp();
+try{initApp();}catch(err){showBoot('初始化错误：'+err.message);}
 </script>
 </body>
 </html>
