@@ -93,7 +93,9 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 .barLabel{display:flex;justify-content:space-between;font-size:13px;color:#475569;margin-bottom:4px}
 .barTrack{height:10px;background:#e2e8f0;border-radius:5px;overflow:hidden}
 .barFill{height:100%;background:linear-gradient(90deg,#14b8a6,#0ea5e9);border-radius:5px}
-.settingBtn{display:block;width:100%;padding:14px;border:1px dashed #94a3b8;border-radius:12px;background:none;color:#64748b;font-size:14px;cursor:pointer;margin-top:14px}
+.changeDiseaseBtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(90deg,#0d9488,#0ea5e9);color:#fff;font-size:15px;font-weight:bold;letter-spacing:1px;cursor:pointer;margin-top:16px;box-shadow:0 4px 12px rgba(13,148,136,.3);touch-action:manipulation}
+.changeDiseaseBtn:active{opacity:.85}
+.soundHint{margin-top:10px;font-size:11px;color:#94a3b8;text-align:center}
 #tabbar{position:fixed;bottom:0;left:0;right:0;max-width:520px;margin:0 auto;display:flex;background:#fff;border-top:1px solid #e2e8f0;padding:6px 0 calc(6px + env(safe-area-inset-bottom));z-index:50}
 .tabbtn{flex:1;border:none;background:none;padding:4px 0;cursor:pointer;color:#94a3b8;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px;touch-action:manipulation}
 .tabbtn svg{width:22px;height:22px}
@@ -164,7 +166,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 </head>
 <body>
 
-<div id="bootError">⚠️ 页面脚本未成功加载。<br>常见原因：① 复制代码不完整（请在电脑上重新完整复制，确保文件以 &lt;/html&gt; 结尾）；② 浏览器缓存了旧文件（请用无痕模式或加 ?v=62 打开）。</div>
+<div id="bootError">⚠️ 页面脚本未成功加载。<br>常见原因：① 复制代码不完整（请在电脑上重新完整复制，确保文件以 &lt;/html&gt; 结尾）；② 浏览器缓存了旧文件（请用无痕模式或加 ?v=63 打开）。</div>
 
 <section id="view-disease">
   <div class="pageTitle">选择您的疾病类型</div>
@@ -204,7 +206,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
       <li>本应用带语音引导，建议开启手机媒体音量。</li>
     </ul>
   </div>
-  <p class="footer">制作：莆田学院附属医院 呼吸与危重症医学科三区<br>壶兰呼吸 v6.2（指南校订版）</p>
+  <p class="footer">制作：莆田学院附属医院 呼吸与危重症医学科三区<br>壶兰呼吸 v6.3（指南校订版）</p>
 </section>
 
 <section id="view-train" class="view">
@@ -235,9 +237,16 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
   </div>
   <div class="card"><h3>📅 本月打卡日历</h3><div class="calWrap" id="calGrid"></div></div>
   <div class="card"><h3>📊 训练偏好分析</h3><div class="barChart" id="barChart"></div></div>
+  <button class="changeDiseaseBtn" onclick="changeDisease()">🔄 重新选择疾病类型</button>
+  <p class="footer">数据统计仅保存在本手机，保护您的隐私<br>莆田学院附属医院 呼吸与危重症医学科三区</p>
+</section>
+
+<section id="view-about" class="view">
+  <div class="pageTitle">关于</div>
   <div class="card">
     <h3>🏥 制作单位</h3>
     <p style="font-size:14px;line-height:1.8;color:#475569">莆田学院附属医院<br><b style="color:#0f766e">呼吸与危重症医学科三区</b></p>
+    <p style="font-size:12px;line-height:1.8;color:#64748b;margin-top:8px">莆田学院附属医院呼吸与危重症医学科是治疗呼吸系统常见病、多发病及危重疑难病的科室，为医院重点科室，福建省、莆田市临床重点专科，国家PCCM科规范化建设三级医院优秀单位，福建省呼吸专科医联体中心单位，福建省基层呼吸疾病防治联盟单位，莆田市医学会呼吸分会挂靠我科。学科专业技术力量雄厚。我科将继续秉承以人为本，善待病人，至真至诚的服务承诺，全心全意为广大患者提供优质、便捷、高效的医疗服务。继续保持学科建设、人才培养、学术水平的莆田市领先地位，建成在莆田地区有相当影响，在省内有一定知名度的学科，在主要研究方向上取得突破性进展。</p>
   </div>
   <div class="card">
     <h3>🌿 关于「壶兰呼吸」</h3>
@@ -252,8 +261,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
       <li>交互设计参考 GitHub 开源呼吸训练项目（Breathly、ZenFlow、Calmness 等）。</li>
     </ul>
   </div>
-  <button class="settingBtn" onclick="changeDisease()">🔄 重新选择疾病类型</button>
-  <p class="footer">数据统计仅保存在本手机，保护您的隐私<br>壶兰呼吸 v6.2<br>莆田学院附属医院 呼吸与危重症医学科三区</p>
+  <p class="footer">壶兰呼吸 v6.3<br>莆田学院附属医院 呼吸与危重症医学科三区</p>
 </section>
 
 <section id="view-detail">
@@ -277,6 +285,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
     <button id="btnStart" onclick="onStart()">开始训练</button>
     <button id="btnReset" onclick="reset()">重置</button>
   </div>
+  <p class="soundHint">若无声音：请调大媒体音量，并点右上 🔊 自检</p>
   <div class="stepCard"><h4>📋 动作步骤</h4><ul id="stepsBox"></ul></div>
   <div class="stepCard"><h4>💡 训练要点</h4><ul id="tipsBox"></ul></div>
   <p class="safeNote">如出现头晕、心悸、胸闷请立即停止 · 请遵医嘱训练<br>莆田学院附属医院 呼吸与危重症医学科三区</p>
@@ -288,6 +297,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
   <button class="tabbtn" data-v="assess"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>评估</button>
   <button class="tabbtn" data-v="edu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>宣教</button>
   <button class="tabbtn" data-v="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>我的</button>
+  <button class="tabbtn" data-v="about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>关于</button>
 </nav>
 <div id="toast"></div>
 
@@ -695,7 +705,12 @@ function openDetail(id){
   $('#view-detail').classList.add('active');$('#view-detail').scrollTop=0;
 }
 function closeDetail(){$('#view-detail').classList.remove('active');clearInterval(S.tick);if('speechSynthesis' in window)window.speechSynthesis.cancel();}
-function toggleSound(){S.sound=!S.sound;$('#btnSound').textContent=S.sound?'🔊':'';}
+function toggleSound(){
+  S.sound=!S.sound;
+  $('#btnSound').textContent=S.sound?'🔊':'🔇';
+  if(S.sound){unlockAudio();beep('in');speak('语音引导正常');toast('🔊 语音已开启，请确认媒体音量已调大');}
+  else{if('speechSynthesis' in window)window.speechSynthesis.cancel();toast('语音已关闭');}
+}
 document.querySelectorAll('.cyc').forEach(function(b){b.onclick=function(){
   document.querySelectorAll('.cyc').forEach(function(x){x.classList.remove('on');});
   b.classList.add('on');S.cycles=+b.dataset.c;updCycle();
@@ -712,6 +727,7 @@ function setPhase(i){
 }
 function onStart(){
   if(S.running){pause();return;}
+  unlockAudio();
   if(!S.started){S.started=true;S.cycle=1;updCycle();setPhase(0);}
   S.running=true;$('#view-detail').classList.remove('paused');
   $('#btnStart').textContent='暂停';
@@ -742,13 +758,36 @@ function finish(){
   $('#btnStart').textContent='再来一次';S.started=false;
   addRecord(S.t.id);toast('🎉 完成训练，已打卡记录！');
 }
+/* ---------- 音频（安卓/微信兼容） ---------- */
 var AC=null;
+var ZH_VOICE=null;
+function pickVoice(){
+  if(!('speechSynthesis' in window))return;
+  var vs=window.speechSynthesis.getVoices();
+  for(var i=0;i<vs.length;i++){
+    if(vs[i].lang&&vs[i].lang.indexOf('zh')===0){ZH_VOICE=vs[i];break;}
+  }
+}
+function unlockAudio(){
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==='suspended')AC.resume();
+  }catch(e){}
+  if('speechSynthesis' in window){
+    window.speechSynthesis.resume();
+    pickVoice();
+  }
+}
+document.addEventListener('pointerdown',unlockAudio,{once:true});
+document.addEventListener('touchstart',unlockAudio,{once:true});
+if('speechSynthesis' in window){pickVoice();window.speechSynthesis.onvoiceschanged=pickVoice;}
 function speak(text){
   if(!S.sound)return;
   if('speechSynthesis' in window){
     window.speechSynthesis.cancel();
     var msg=new SpeechSynthesisUtterance(text);
     msg.lang='zh-CN';msg.rate=0.8;
+    if(ZH_VOICE)msg.voice=ZH_VOICE;
     window.speechSynthesis.speak(msg);
   }
 }
@@ -756,6 +795,7 @@ function beep(k){
   if(!S.sound)return;
   try{
     AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==='suspended')AC.resume();
     var o=AC.createOscillator(),g=AC.createGain();
     o.frequency.value=k==='in'?523:(k==='hold'?659:392);
     g.gain.setValueAtTime(.0001,AC.currentTime);
@@ -821,7 +861,6 @@ function renderStats(){
   $('#barChart').innerHTML=barHtml;
 }
 function toast(msg){var t=$('#toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2200);}
-document.body.addEventListener('click',function(){if('speechSynthesis' in window&&window.speechSynthesis.paused)window.speechSynthesis.resume();},{once:true});
 
 try{initApp();}catch(err){showBoot('初始化错误：'+err.message);}
 </script>
