@@ -18,6 +18,9 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 .hero h1{font-size:30px;letter-spacing:6px;margin-top:14px;background:linear-gradient(90deg,#0d9488,#0ea5e9);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
 .hero .sub{color:#0f766e;margin-top:6px;font-size:14px;letter-spacing:2px}
 .hero .org{margin-top:10px;font-size:12px;color:#64748b}
+.elderBtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;padding:15px;border:2px solid #f59e0b;border-radius:14px;background:#fffbeb;color:#b45309;font-size:16px;font-weight:bold;cursor:pointer;touch-action:manipulation;box-shadow:0 2px 10px rgba(245,158,11,.2)}
+.elderBtn.on{background:linear-gradient(90deg,#f59e0b,#f97316);color:#fff;border-color:transparent}
+.elderBtn:active{opacity:.85}
 .card{background:#fff;border-radius:16px;padding:16px;margin-top:14px;box-shadow:0 2px 10px rgba(13,148,136,.08)}
 .card h3{font-size:15px;color:#0f766e;margin-bottom:10px}
 .stats{display:flex;gap:12px}
@@ -130,6 +133,64 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 .safeNote{margin-top:14px;font-size:11px;color:#94a3b8;text-align:center;line-height:1.7}
 .footer{margin-top:22px;text-align:center;font-size:11px;color:#94a3b8;line-height:1.8}
 #toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#0f766e;color:#fff;border-radius:30px;padding:10px 22px;font-size:14px;z-index:300;display:none;box-shadow:0 4px 14px rgba(0,0,0,.2);max-width:86%;text-align:center}
+/* ---------- 老年模式（大字体） ---------- */
+body.elder .hero h1{font-size:36px}
+body.elder .hero .sub{font-size:17px}
+body.elder .hero .org{font-size:15px}
+body.elder .elderBtn{font-size:19px;padding:17px}
+body.elder .card h3{font-size:18px}
+body.elder .card p{font-size:16px !important;line-height:1.9 !important}
+body.elder .stat b{font-size:30px}
+body.elder .stat span{font-size:15px}
+body.elder .qbtn{font-size:16px;padding:16px 4px}
+body.elder .emBanner{font-size:16px}
+body.elder .notice li{font-size:16px}
+body.elder .trainNotice{font-size:16px}
+body.elder .pageTitle{font-size:24px}
+body.elder .pageSub{font-size:15px}
+body.elder .dInfo b{font-size:17px}
+body.elder .dInfo p{font-size:15px}
+body.elder .tInfo b{font-size:18px}
+body.elder .tInfo p{font-size:15px}
+body.elder .tag{font-size:12px}
+body.elder .recBadge{font-size:12px}
+body.elder .assessIntro{font-size:16px}
+body.elder .qTitle{font-size:17px}
+body.elder .qOpts label{font-size:16px;padding:14px}
+body.elder .submitBtn{font-size:19px}
+body.elder .resetBtn{font-size:17px}
+body.elder .resultCard h3{font-size:20px}
+body.elder .resultCard .score{font-size:42px}
+body.elder .resultCard .advice{font-size:16px}
+body.elder .chartEmpty{font-size:14px}
+body.elder .eduGroupTitle{font-size:17px}
+body.elder .eduList li{font-size:16px}
+body.elder .emergency li{font-size:16px}
+body.elder .emNote{font-size:16px}
+body.elder .call120{font-size:20px;padding:15px 0}
+body.elder .bigStat b{font-size:38px}
+body.elder .bigStat span{font-size:15px}
+body.elder .calHead{font-size:13px}
+body.elder .calDay{font-size:14px}
+body.elder .barLabel{font-size:16px}
+body.elder .changeDiseaseBtn{font-size:18px;padding:17px}
+body.elder .soundHint{font-size:14px}
+body.elder .tabbtn{font-size:12px}
+body.elder .tabbtn svg{width:26px;height:26px}
+body.elder #dTitle{font-size:20px}
+body.elder #phaseName{font-size:24px}
+body.elder #count{font-size:38px}
+body.elder #phaseHint{font-size:17px}
+body.elder #bubble{width:152px;height:152px}
+body.elder .metaRow span{font-size:14px}
+body.elder .cyc{font-size:16px;padding:9px 18px}
+body.elder #btnStart{font-size:19px}
+body.elder #btnReset{font-size:17px}
+body.elder .stepCard h4{font-size:17px}
+body.elder .stepCard li{font-size:16px}
+body.elder .safeNote{font-size:13px}
+body.elder .footer{font-size:13px}
+body.elder #toast{font-size:16px}
 @keyframes scaleVar{from{transform:scale(var(--fs,1))}to{transform:scale(var(--ts,1))}}
 @keyframes yVar{from{transform:translateY(var(--fy,0px))}to{transform:translateY(var(--ty,0px))}}
 @keyframes oVar{from{opacity:var(--fo,1)}to{opacity:var(--to,1)}}
@@ -166,7 +227,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 </head>
 <body>
 
-<div id="bootError">⚠️ 页面脚本未成功加载。<br>常见原因：① 复制代码不完整（请在电脑上重新完整复制，确保文件以 &lt;/html&gt; 结尾）；② 浏览器缓存了旧文件（请用无痕模式或加 ?v=63 打开）。</div>
+<div id="bootError">⚠️ 页面脚本未成功加载。<br>常见原因：① 复制代码不完整（请在电脑上重新完整复制，确保文件以 &lt;/html&gt; 结尾）；② 浏览器缓存了旧文件（请用无痕模式或加 ?v=64 打开）。</div>
 
 <section id="view-disease">
   <div class="pageTitle">选择您的疾病类型</div>
@@ -188,6 +249,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
     <p class="sub" id="currentDiseaseName">呼吸康复训练助手</p>
     <p class="org">莆田学院附属医院 呼吸与危重症医学科三区</p>
   </header>
+  <button id="elderBtn" class="elderBtn" onclick="toggleElder()">👴 老年模式：大字体（点击开启）</button>
   <div class="card stats">
     <div class="stat"><b id="stToday">0</b><span>今日训练（次）</span></div>
     <div class="stat"><b id="stStreak">0</b><span>连续打卡（天）</span></div>
@@ -206,7 +268,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
       <li>本应用带语音引导，建议开启手机媒体音量。</li>
     </ul>
   </div>
-  <p class="footer">制作：莆田学院附属医院 呼吸与危重症医学科三区<br>壶兰呼吸 v6.3（指南校订版）</p>
+  <p class="footer">制作：莆田学院附属医院 呼吸与危重症医学科三区<br>壶兰呼吸 v6.4（指南校订版）</p>
 </section>
 
 <section id="view-train" class="view">
@@ -258,10 +320,11 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
       <li>每日 2–3 次，每次 10–15 分钟，循序渐进；</li>
       <li>训练时保持肩颈放松，深吸慢呼，跟随语音引导；</li>
       <li>完成训练后自动打卡，并生成统计图表与评估趋势；</li>
+      <li>首页「老年模式」可一键放大全站字体；</li>
       <li>交互设计参考 GitHub 开源呼吸训练项目（Breathly、ZenFlow、Calmness 等）。</li>
     </ul>
   </div>
-  <p class="footer">壶兰呼吸 v6.3<br>莆田学院附属医院 呼吸与危重症医学科三区</p>
+  <p class="footer">壶兰呼吸 v6.4<br>莆田学院附属医院 呼吸与危重症医学科三区</p>
 </section>
 
 <section id="view-detail">
@@ -506,6 +569,8 @@ function $(s){return document.querySelector(s);}
 var currentDisease=localStorage.getItem('hl_disease');
 
 function initApp(){
+  if(localStorage.getItem('hl_elder')==='1'){document.body.classList.add('elder');}
+  updateElderBtn();
   renderDiseaseList();
   if(!currentDisease){
     $('#view-disease').classList.add('active');
@@ -515,6 +580,20 @@ function initApp(){
     switchTab('home');
   }
   $('#bootError').style.display='none';
+}
+function toggleElder(){
+  var on=document.body.classList.toggle('elder');
+  localStorage.setItem('hl_elder',on?'1':'0');
+  updateElderBtn();
+  toast(on?'👴 老年模式已开启，字体已放大':'老年模式已关闭');
+}
+function updateElderBtn(){
+  var on=document.body.classList.contains('elder');
+  var b=$('#elderBtn');
+  if(b){
+    b.textContent=on?'👴 老年模式：已开启（点击关闭）':'👴 老年模式：大字体（点击开启）';
+    b.classList.toggle('on',on);
+  }
 }
 function showBoot(msg){
   var el=$('#bootError');
@@ -707,7 +786,7 @@ function openDetail(id){
 function closeDetail(){$('#view-detail').classList.remove('active');clearInterval(S.tick);if('speechSynthesis' in window)window.speechSynthesis.cancel();}
 function toggleSound(){
   S.sound=!S.sound;
-  $('#btnSound').textContent=S.sound?'🔊':'🔇';
+  $('#btnSound').textContent=S.sound?'🔊':'';
   if(S.sound){unlockAudio();beep('in');speak('语音引导正常');toast('🔊 语音已开启，请确认媒体音量已调大');}
   else{if('speechSynthesis' in window)window.speechSynthesis.cancel();toast('语音已关闭');}
 }
