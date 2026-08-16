@@ -257,6 +257,21 @@ body.elder #btnMusic{width:44px;height:44px;font-size:20px}
 body.elder .homeQuickBtn{padding:22px 10px;gap:8px}
 body.elder .homeQuickBtn .hqi{font-size:44px}
 body.elder .homeQuickBtn .hql{font-size:21px;letter-spacing:3px}
+/* ---------- 首页音乐播放器（持久播放，带播放/停止控制） ---------- */
+.musicPlayer{background:linear-gradient(135deg,#0ea5a4,#06b6d4);border-radius:18px;padding:13px 15px;color:#fff;box-shadow:0 4px 14px rgba(13,148,136,.22);margin-bottom:12px}
+.musicPlayer .mpTop{display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.musicPlayer .mpIcon{font-size:26px;line-height:1}
+.musicPlayer .mpTitle{font-size:18px;font-weight:800;letter-spacing:2px}
+.musicPlayer .mpNow{margin-left:auto;font-size:12px;opacity:.95;max-width:48%;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.musicPlayer .mpCtl{display:flex;gap:8px;margin-top:12px}
+.musicPlayer .mpBtn{flex:1;border:none;border-radius:12px;padding:11px 4px;font-size:14px;font-weight:700;cursor:pointer;background:rgba(255,255,255,.94);color:#0f766e;touch-action:manipulation;transition:transform .12s;-webkit-tap-highlight-color:transparent}
+.musicPlayer .mpBtn:active{transform:scale(.96)}
+.musicPlayer .mpBtn.alt{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.55)}
+.musicPlayer .mpBtn.off{opacity:.45}
+body.elder .musicPlayer .mpIcon{font-size:34px}
+body.elder .musicPlayer .mpTitle{font-size:23px;letter-spacing:3px}
+body.elder .musicPlayer .mpNow{font-size:15px}
+body.elder .musicPlayer .mpBtn{font-size:18px;padding:14px 4px}
 /* ---------- 吸入剂教学 ---------- */
 #inhalerModal{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:80;display:none;align-items:center;justify-content:center;padding:20px}
 #inhalerModal.open{display:flex}
@@ -320,8 +335,19 @@ body.elder .homeQuickBtn .hql{font-size:21px;letter-spacing:3px}
     <p class="sub" id="currentDiseaseName">呼吸康复训练助手</p>
     <p class="org">莆田学院附属医院 呼吸与危重症医学科三区</p>
   </header>
-  <div class="homeQuick">
-    <button class="homeQuickBtn music" onclick="openDrawer();setTimeout(scrollToMusic,320)">🎵<span class="hql">音乐疗法</span></button>
+  <div class="homeQuick" style="flex-direction:column">
+    <div class="musicPlayer" id="musicPlayer">
+      <div class="mpTop" onclick="openDrawer();setTimeout(scrollToMusic,320)">
+        <span class="mpIcon">🎵</span>
+        <span class="mpTitle">音乐疗法</span>
+        <span class="mpNow" id="mpNow">未选择曲目</span>
+      </div>
+      <div class="mpCtl">
+        <button class="mpBtn" id="mpToggle" onclick="mpToggle()">▶ 播放</button>
+        <button class="mpBtn alt" id="mpStop" onclick="mpStop()">⏹ 停止</button>
+        <button class="mpBtn alt" onclick="openDrawer();setTimeout(scrollToMusic,320)">🎶 选曲</button>
+      </div>
+    </div>
     <button class="homeQuickBtn inhaler" onclick="openDrawer();setTimeout(scrollToInhaler,320)">💊<span class="hql">吸入剂教学</span></button>
   </div>
   <button id="elderBtn" class="elderBtn" onclick="toggleElder()">👴 老年模式：大字体（点击开启）</button>
@@ -665,6 +691,7 @@ function initApp(){
     switchTab('home');
   }
   updateMenuBtn();
+  mpRender();
   $('#bootError').style.display='none';
 }
 function toggleElder(){
@@ -1087,16 +1114,17 @@ var MUSIC_SRC={
  xuezhi:'雪之梦.mp3',
  yueguang:'月光水岸.mp3'
 };
-var MG={playing:null,preview:false,nodes:[],timers:[],master:null,audio:null};
+var MG={playing:null,paused:false,nodes:[],timers:[],master:null,audio:null};
 function musicSelected(){return localStorage.getItem('hl_music')||'anni';}
 function updateMenuBtn(){var b=$('#menuBtn');if(!b)return;b.style.display=($('#view-home').classList.contains('active')&&!$('#view-detail').classList.contains('active'))?'block':'none';}
 function renderMusicList(){
   var sel=musicSelected(),h='';
   MUSIC_TRACKS.forEach(function(t){
+    var playingThis=(MG.playing===t.id&&!MG.paused);
     h+='<div class="mItem'+(t.id===sel?' sel':'')+'" onclick="selectMusic(\''+t.id+'\')">'
       +'<div class="mIcon">'+t.icon+'</div>'
       +'<div class="mInfo"><b>'+t.name+'</b><span>'+t.desc+'</span></div>'
-      +(t.id!=='none'?'<button class="mPrev" onclick="event.stopPropagation();previewMusic(\''+t.id+'\')">'+(MG.playing===t.id&&MG.preview?'⏸ 停止':'▶ 试听')+'</button>':'')
+      +(t.id!=='none'?'<button class="mPrev" onclick="event.stopPropagation();listToggle(\''+t.id+'\')">'+(playingThis?'⏸ 暂停':'▶ 播放')+'</button>':'')
       +'<div class="mCheck">✓</div></div>';
   });
   $('#musicList').innerHTML=h;
@@ -1104,31 +1132,33 @@ function renderMusicList(){
 function openDrawer(){renderMusicList();renderInhalerList();$('#drawer').classList.add('open');$('#drawerMask').classList.add('open');}
 function scrollToMusic(){var el=document.getElementById('musicList');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 function scrollToInhaler(){var el=document.getElementById('inhalerList');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
-function closeDrawer(){$('#drawer').classList.remove('open');$('#drawerMask').classList.remove('open');if(MG.preview)musicStop();}
+function closeDrawer(){$('#drawer').classList.remove('open');$('#drawerMask').classList.remove('open');}
 function selectMusic(id){
   localStorage.setItem('hl_music',id);
   if(id==='none'){
-    if(MG.playing)musicStop();
+    musicStop();
     toast('已关闭背景音乐');
   }else{
-    // 点击选择曲目时立即试播（用户手势，移动端浏览器允许播放）
-    musicStart(id,true);
+    // 选中即持久播放（不再只是试听），关闭抽屉/切换页面也不会停
+    musicStart(id);
     var t=MUSIC_TRACKS.find(function(x){return x.id===id;});
     toast('已选择「'+t.name+'」并开始播放');
   }
-  renderMusicList();updMusicBtn();
+  renderMusicList();updMusicBtn();mpRender();
 }
-function previewMusic(id){
-  if(MG.playing===id&&MG.preview){musicStop();renderMusicList();return;}
-  musicStart(id,true);renderMusicList();
+function listToggle(id){
+  if(MG.playing===id&&!MG.paused){musicPause();}
+  else{selectMusic(id);}
+  renderMusicList();
 }
 function toggleMusic(){
-  if(MG.playing){musicStop();toast('🎵 背景音乐已关闭');}
-  else{var id=musicSelected();if(id==='none')id='anni';musicStart(id,false);toast('🎵 背景音乐播放中');}
+  if(MG.playing&&!MG.paused){musicPause();toast('🎵 已暂停');}
+  else if(MG.playing&&MG.paused){musicResume();toast('🎵 继续播放');}
+  else{var id=musicSelected();if(id==='none')id='anni';musicStart(id);toast('🎵 背景音乐播放中');}
   if($('#drawer').classList.contains('open'))renderMusicList();
 }
-function updMusicBtn(){var b=$('#btnMusic');if(b)b.classList.toggle('off',!MG.playing);}
-function autoMusicStart(){var id=musicSelected();if(id!=='none')musicStart(id,false);}
+function updMusicBtn(){var b=$('#btnMusic');if(b)b.classList.toggle('off',!(MG.playing&&!MG.paused));}
+function autoMusicStart(){var id=musicSelected();if(id!=='none')musicStart(id);}
 function resolveUrl(src){
   var loc=window.location.href.replace(/#.*$/,'').replace(/\?.*$/,'');
   // 统一以当前页面所在目录为基准解析资源路径
@@ -1138,11 +1168,13 @@ function resolveUrl(src){
   }
   return new URL(src,loc).href;
 }
-function musicStart(id,preview){
+function musicStart(id){
   var src=MUSIC_SRC[id];if(!src)return;
+  // 同一首且正在播放则不打断，保持连続
+  if(MG.playing===id&&!MG.paused&&MG.audio)return;
   musicStop();
   unlockAudio();
-  MG.playing=id;MG.preview=!!preview;
+  MG.playing=id;MG.paused=false;
   var a=new Audio();
   // 使用基于当前页面 URL 的绝对路径，避免 GitHub Pages/二维码跳转后的相对路径解析问题
   a.src=resolveUrl(src);
@@ -1157,17 +1189,54 @@ function musicStart(id,preview){
   // 移动端浏览器必须在用户手势（点击/触摸）内调用 play 才会出声
   var p=a.play();
   if(p&&p.catch)p.catch(function(err){
-    toast('🎵 请点击「开始训练」或轻触屏幕任意处开启声音');
+    toast('🎵 请轻触屏幕任意处开启声音（部分手机需先点一下页面）');
   });
   MG.audio=a;
-  updMusicBtn();
+  updMusicBtn();mpRender();
+}
+function musicPause(){
+  if(!MG.audio||!MG.playing)return;
+  try{MG.audio.pause();}catch(e){}
+  MG.paused=true;updMusicBtn();mpRender();
+}
+function musicResume(){
+  if(!MG.playing||!MG.audio)return;
+  unlockAudio();
+  var p=MG.audio.play();
+  if(p&&p.catch)p.catch(function(){});
+  MG.paused=false;updMusicBtn();mpRender();
 }
 function musicStop(){
   MG.timers.forEach(function(t){clearInterval(t);clearTimeout(t);});MG.timers=[];
   var a=MG.audio;
-  MG.audio=null;MG.playing=null;MG.preview=false;
+  MG.audio=null;MG.playing=null;MG.paused=false;
   if(a){try{a.pause();}catch(e){}try{a.src='';}catch(e){}}
-  updMusicBtn();
+  updMusicBtn();mpRender();
+}
+/* 首页音乐播放器控件 */
+function mpToggle(){
+  if(MG.playing&&!MG.paused){musicPause();}
+  else if(MG.playing&&MG.paused){musicResume();}
+  else{var id=musicSelected();if(id==='none')id='anni';musicStart(id);}
+}
+function mpStop(){musicStop();}
+function mpRender(){
+  var now=document.getElementById('mpNow'),tg=document.getElementById('mpToggle');
+  if(!now||!tg)return;
+  if(MG.playing){
+    var t=MUSIC_TRACKS.find(function(x){return x.id===MG.playing;});
+    now.textContent=(MG.paused?'已暂停：':'播放中：')+(t?t.name:'');
+    tg.textContent=MG.paused?'▶ 继续':'⏸ 暂停';
+  }else{
+    var sel=musicSelected();
+    if(sel&&sel!=='none'){
+      var st=MUSIC_TRACKS.find(function(x){return x.id===sel;});
+      now.textContent='已选：'+(st?st.name:'')+'（未播放）';
+    }else{
+      now.textContent='未选择曲目';
+    }
+    tg.textContent='▶ 播放';
+  }
 }
 
 
