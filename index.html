@@ -244,6 +244,19 @@ body.elder #toast{font-size:16px}
 .drawerNote{font-size:11px;color:#94a3b8;line-height:1.7;margin-top:6px}
 #btnMusic{border:none;background:#e0f2fe;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer;margin-left:6px}
 #btnMusic.off{filter:grayscale(1);opacity:.5}
+/* ---------- 首页醒目快捷入口（音乐疗法 / 吸入剂教学） ---------- */
+.homeQuick{display:flex;gap:12px;margin:16px 0 4px}
+.homeQuickBtn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 10px;border:none;border-radius:18px;cursor:pointer;box-shadow:0 4px 14px rgba(13,148,136,.18);touch-action:manipulation;transition:transform .12s;-webkit-tap-highlight-color:transparent}
+.homeQuickBtn:active{transform:scale(.96)}
+.homeQuickBtn .hqi{font-size:34px;line-height:1}
+.homeQuickBtn .hql{font-size:16px;font-weight:800;letter-spacing:2px}
+.homeQuickBtn.music{background:linear-gradient(135deg,#0ea5a4,#06b6d4);color:#fff}
+.homeQuickBtn.inhaler{background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff}
+body.elder #menuBtn{width:50px;height:50px;font-size:22px;top:16px;left:16px}
+body.elder #btnMusic{width:44px;height:44px;font-size:20px}
+body.elder .homeQuickBtn{padding:22px 10px;gap:8px}
+body.elder .homeQuickBtn .hqi{font-size:44px}
+body.elder .homeQuickBtn .hql{font-size:21px;letter-spacing:3px}
 /* ---------- 吸入剂教学 ---------- */
 #inhalerModal{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:80;display:none;align-items:center;justify-content:center;padding:20px}
 #inhalerModal.open{display:flex}
@@ -307,6 +320,10 @@ body.elder #toast{font-size:16px}
     <p class="sub" id="currentDiseaseName">呼吸康复训练助手</p>
     <p class="org">莆田学院附属医院 呼吸与危重症医学科三区</p>
   </header>
+  <div class="homeQuick">
+    <button class="homeQuickBtn music" onclick="openDrawer();setTimeout(scrollToMusic,320)">🎵<span class="hql">音乐疗法</span></button>
+    <button class="homeQuickBtn inhaler" onclick="openDrawer();setTimeout(scrollToInhaler,320)">💊<span class="hql">吸入剂教学</span></button>
+  </div>
   <button id="elderBtn" class="elderBtn" onclick="toggleElder()">👴 老年模式：大字体（点击开启）</button>
   <div class="card stats">
     <div class="stat"><b id="stToday">0</b><span>今日训练（次）</span></div>
@@ -1085,6 +1102,8 @@ function renderMusicList(){
   $('#musicList').innerHTML=h;
 }
 function openDrawer(){renderMusicList();renderInhalerList();$('#drawer').classList.add('open');$('#drawerMask').classList.add('open');}
+function scrollToMusic(){var el=document.getElementById('musicList');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+function scrollToInhaler(){var el=document.getElementById('inhalerList');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 function closeDrawer(){$('#drawer').classList.remove('open');$('#drawerMask').classList.remove('open');if(MG.preview)musicStop();}
 function selectMusic(id){
   localStorage.setItem('hl_music',id);
